@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TATPROJECT info="" leader="" name="" title="" user="" version="" workdir="" >
+<CONFIG base="" comment="" name="default" >
+<INSTANCES>
+<INSTANCE annotation="" comment="" name="Strategy" priority="100" type="model" />
+<INSTANCE annotation="" comment="" name="Simulator" priority="100" type="env" />
+</INSTANCES>
+<SIGNALS>
+<SIGNAL annotation="" comment="" name="FinishSimulation" paramstype="C" type="out">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="int" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="OrderSpeedRequest" paramstype="C" type="out">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="int" />
+<PARAMETER annotation="" comment="" field="Param3" type="float" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="OrderTurnRequest" paramstype="C" type="out">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="int" />
+<PARAMETER annotation="" comment="" field="Param3" type="float" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="OrderFireRequest" paramstype="C" type="out">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="int" />
+<PARAMETER annotation="" comment="" field="Param3" type="int" />
+<PARAMETER annotation="" comment="" field="Param4" type="string" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="InitDataComplete" paramstype="C" type="in" />
+<SIGNAL annotation="" comment="" name="StartSimulation" paramstype="C" type="in">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="DestroyShip" paramstype="C" type="in">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="int" />
+<PARAMETER annotation="" comment="" field="Param3" type="int" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="OrderSpeedResponse" paramstype="C" type="in">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="int" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="OrderSpeedReject" paramstype="C" type="in">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="int" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="OrderTurnResponse" paramstype="C" type="in">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="int" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="OrderTurnReject" paramstype="C" type="in">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="int" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="OrderFireResponse" paramstype="C" type="in">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="int" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="OrderFireReject" paramstype="C" type="in">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="int" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="ShipsCurrentState" paramstype="C" type="in">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="string" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="VisibleShip" paramstype="C" type="in">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+<PARAMETER annotation="" comment="" field="Param2" type="string" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="StrategyVictory" paramstype="C" type="in">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="StrategyLose" paramstype="C" type="in">
+<PARAMETER annotation="" comment="" field="Param1" type="int" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="messageLog" paramstype="C" type="out">
+<PARAMETER annotation="" comment="" field="Param1" type="string" />
+</SIGNAL>
+<SIGNAL annotation="" comment="" name="messageError" paramstype="C" type="out">
+<PARAMETER annotation="" comment="" field="Param1" type="string" />
+</SIGNAL>
+</SIGNALS>
+<DATATYPE>
+	<TYPEDEF name="string" type="char*">
+		<ATTRIBUTE value="" comment="format specifier"/>
+		<ATTRIBUTE value="strcmp" comment="compare function"/>
+	</TYPEDEF>
+</DATATYPE>
+</CONFIG>
+</TATPROJECT>

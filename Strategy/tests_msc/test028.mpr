@@ -1,0 +1,17 @@
+mscdocument test028;
+msc test028;
+Simulator: instance;
+Strategy: instance;
+Simulator: out InitDataComplete,1 to Strategy;
+Strategy: in InitDataComplete,1 from Simulator;
+Simulator: out ShipsCurrentState,2(1, "(. (. 1, 1, CRUISER, 8, NORTH, 70, (. 75, 15 .), (: 15, 15, 3, 0 :) .) .)") to Strategy;
+Strategy: in ShipsCurrentState,2(1, "(. (. 1, 1, CRUISER, 8, NORTH, 70, (. 75, 15 .), (: 15, 15, 3, 0 :) .) .)") from Simulator;
+Simulator: out StartSimulation,3(0) to Strategy;
+Strategy: in StartSimulation,3(0) from Simulator;
+Strategy: out FinishSimulation,4(0, 1) to Simulator;
+Simulator: in FinishSimulation,4(0, 1) from Strategy;
+Simulator: out StrategyVictory,5(1) to Strategy;
+Strategy: in StrategyVictory,5(1) from Simulator;
+Simulator: endinstance;
+Strategy: endinstance;
+endmsc;

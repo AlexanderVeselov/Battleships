@@ -1,0 +1,17 @@
+# Properties For Battle Field
+
+ColorLand=0xCC9900
+ColorFleet=0x99CCFF
+ColorNormal=0x3366FF
+ColorDeeply=0x0033CC
+ColorVeryDeeply=0x003399
+
+TextureLand=images/sand.gif
+TextureDeeply=images/deep.png
+TextureVeryDeeply=images/veryDeep.png
+
+ColorShotTrace=0xFFFFFF
+ColorShotEnding=0xFF0000
+
+CellSizeX=10
+CellSizeY=10

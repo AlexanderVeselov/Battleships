@@ -1,0 +1,1 @@
+@C:\JBuilder6\jdk1.3.1\bin\javac *.java

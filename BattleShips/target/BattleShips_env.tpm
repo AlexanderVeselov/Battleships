@@ -1,0 +1,11 @@
+
+USERTARGET = C:\Battleships\BattleShips\target\BattleShips_env$(sctOEXTENSION)
+USERLIBRARIES = -lm
+
+C:\Battleships\BattleShips\target\BattleShips_env$(sctOEXTENSION): C:\Battleships\BattleShips\target\BattleShips_env.c C:\Battleships\BattleShips\target\BattleShips.ifc
+	$(sctCC) @<<
+	$(sctCPPFLAGS) $(sctCCFLAGS)
+	$(sctIFDEF)
+	/FoC:\Battleships\BattleShips\target\BattleShips_env$(sctOEXTENSION)
+	C:\Battleships\BattleShips\target\BattleShips_env.c
+<<

@@ -1,0 +1,168 @@
+SDT-SYSTEM-4.3
+[DRIVES]
+[SOURCE-TARGET-DIRECTORY]
+SourceDirectory=C:\Battleships\BattleShips\
+TargetDirectory=target\
+[DIAGRAMS]
+0 11 ctypes C:\Telelogic\SDL_TTCN_Suite4.3\sdt\include\ADT\ctypes.sun 0 998122282 ctypes ""
+0 11 BasicTypes ..\Packages\BasicTypes.sun 0 1050914734 BasicTypes ""
+1 51 ConfigFile ..\Config\ConfigFile.pr 0 1147706161 ConfigFile ""
+1 19 h2i ..\Packages\h2i.sop 0 1049104912 h2i ""
+1 19 i2h ..\Packages\i2h.sop 0 1049104930 i2h ""
+1 19 d2i ..\Packages\d2i.sop 0 1049104942 d2i ""
+1 19 i2d ..\Packages\i2d.sop 0 1049103778 i2d ""
+1 19 nw2i ..\Packages\nw2i.sop 0 1049104956 nw2i ""
+1 19 i2nw ..\Packages\i2nw.sop 0 1049104362 i2nw ""
+1 19 ns2i ..\Packages\ns2i.sop 0 1049104424 ns2i ""
+1 19 i2ns ..\Packages\i2ns.sop 0 1049104556 i2ns ""
+0 1 BattleShips BattleShips.ssy 0 1052557974 BattleShips ""
+1 2 Simulator ..\Simulator\Simulator.sbk 0 1053706356 Simulator ""
+2 5 Router ..\Simulator\Router.spr 0 1053764944 Router ""
+3 6 SendOrderSpeedRequest ..\Simulator\SendOrderSpeedRequest.spd 0 1053706276 SendOrderSpeedRequest ""
+3 6 SendOrderSpeedResponse ..\Simulator\SendOrderSpeedResponse.spd 0 1053705746 SendOrderSpeedResponse ""
+3 6 SendOrderSpeedReject ..\Simulator\SendOrderSpeedReject.spd 0 1053705770 SendOrderSpeedReject ""
+3 6 SendOrderTurnRequest ..\Simulator\SendOrderTurnRequest.spd 0 1053706322 SendOrderTurnRequest ""
+3 6 SendOrderTurnResponse ..\Simulator\SendOrderTurnResponse.spd 0 1053705802 SendOrderTurnResponse ""
+3 6 SendFinishSimulation ..\Simulator\SendFinishSimulation.spd 0 1053706360 SendFinishSimulation ""
+3 6 SendOrderTurnReject ..\Simulator\SendOrderTurnReject.spd 0 1053705832 SendOrderTurnReject ""
+3 6 SendVisibleShip ..\Simulator\SendVisibleShip.spd 0 1511787974 SendVisibleShip ""
+3 6 SendOrderFireRequest ..\Simulator\SendOrderFireRequest.spd 0 1053706350 SendOrderFireRequest ""
+3 6 SendShipsCurrentState ..\Simulator\SendShipsCurrentState.spd 0 1053705444 SendShipsCurrentState ""
+3 6 SendOrderFireResponse ..\Simulator\SendOrderFireResponse.spd 0 1053705968 SendOrderFireResponse ""
+3 6 SendStrategyVictory ..\Simulator\SendStrategyVictory.spd 0 1053705658 SendStrategyVictory ""
+3 6 SendOrderFireReject ..\Simulator\SendOrderFireReject.spd 0 1053705990 SendOrderFireReject ""
+3 6 SendStrategyLose ..\Simulator\SendStrategyLose.spd 0 1053765366 SendStrategyLose ""
+3 6 SendDestroyShip ..\Simulator\SendDestroyShip.spd 0 1053705488 SendDestroyShip ""
+2 5 Main ..\Simulator\Main.spr 0 1511788199 Main ""
+3 6 InitDataShipsWeaponry ..\Simulator\InitDataShipsWeaponry.spd 0 1051514706 InitDataShipsWeaponry ""
+3 6 InitStrategyFleet ..\Simulator\InitStrategyFleet.spd 0 1051610766 InitStrategyFleet ""
+4 6 InitRD ..\Simulator\InitRD.spd 0 1051101992 InitRD ""
+4 6 GetMaxShips ..\Simulator\GetMaxShips.spd 0 1049911196 GetMaxShips ""
+4 6 GetCoordinate ..\Simulator\GetCoordinate.spd 0 1051178312 GetCoordinate ""
+5 6 IsBusyPoint ..\Simulator\IsBusyPoint.spd 0 1051177336 IsBusyPoint ""
+3 6 SetVisibility ..\Simulator\SetVisibility.spd 0 1053511192 SetVisibility ""
+4 6 zeroizeVisibility ..\Simulator\zeroizeVisibility.spd 0 1053511112 zeroizeVisibility ""
+3 6 SendCurrentState ..\Simulator\SendCurrentState.spd 0 1052848520 SendCurrentState ""
+3 6 SendVisibleShips ..\Simulator\SendVisibleShips.spd 0 1053507574 SendVisibleShips ""
+3 6 Err2Str ..\Simulator\Err2Str.spd 0 1051610754 Err2Str ""
+3 6 SimIteration ..\Simulator\SimIteration.spd 0 1053423970 SimIteration ""
+4 6 NullingSI ..\Simulator\NullingSI.spd 0 1050484226 NullingSI ""
+4 6 IsASIComplete ..\Simulator\IsASIComplete.spd 0 1050513996 IsASIComplete ""
+4 6 CheckStrategies ..\Simulator\CheckStrategies.spd 0 1053766532 CheckStrategies ""
+4 6 NullingShipOrders ..\Simulator\NullingShipOrders.spd 0 1050512512 NullingShipOrders ""
+4 6 SendResposeOnOrders ..\Simulator\SendResposeOnOrders.spd 0 1050512584 SendResposeOnOrders ""
+4 6 OrderFire ..\Simulator\OrderFire.spd 0 1051955342 OrderFire ""
+5 6 GetCurrentCoordinate ..\Simulator\GetCurrentCoordinate.spd 0 1050594146 GetCurrentCoordinate ""
+5 6 GetProperty ..\Simulator\GetProperty.spd 0 1051608884 GetProperty ""
+5 6 GetNumberShip ..\Simulator\GetNumberShip.spd 0 1051605550 GetNumberShip ""
+5 6 GetAmmunition ..\Simulator\GetAmmunition.spd 0 1051608884 GetAmmunition ""
+5 6 GetLenghtShot ..\Simulator\GetLenghtShot.spd 0 1051608884 GetLenghtShot ""
+5 6 GetFinishCoordinate ..\Simulator\GetFinishCoordinate.spd 0 1051699472 GetFinishCoordinate ""
+4 6 OrderTurn ..\Simulator\OrderTurn.spd 0 1050501384 OrderTurn ""
+4 6 OrderSpeed ..\Simulator\OrderSpeed.spd 0 1050501648 OrderSpeed ""
+4 6 ChangeCoordinate ..\Simulator\ChangeCoordinate.spd 0 1053508156 ChangeCoordinate ""
+5 6 ReadHeading ..\Simulator\ReadHeading.spd 0 1053508150 ReadHeading ""
+6 6 StepCoor ..\Simulator\StepCoor.spd 0 1053361280 StepCoor ""
+4 6 UpdateShots ..\Simulator\UpdateShots.spd 0 1053504808 UpdateShots ""
+5 6 SpeedCoor ..\Simulator\SpeedCoor.spd 0 1053423930 SpeedCoor ""
+4 6 CollisionShip ..\Simulator\CollisionShip.spd 0 1050582758 CollisionShip ""
+5 6 Collision ..\Simulator\Collision.spd 0 1051604482 Collision ""
+6 6 abs ..\Simulator\abs.spd 0 1050142566 abs ""
+5 6 Heading ..\Simulator\Heading.spd 0 1050491484 Heading ""
+3 6 SetSI ..\Simulator\SetSI.spd 0 1053513938 SetSI ""
+3 6 KillStrategy ..\Simulator\KillStrategy.spd 0 1053767708 KillStrategy ""
+3 6 IsWeaponry ..\Simulator\IsWeaponry.spd 0 1053513874 IsWeaponry ""
+2 5 DataSender ..\Simulator\DataSender.spr 0 1511787981 DataSender ""
+3 6 PushShips ..\Simulator\PushShips.spd 0 1053161074 PushShips ""
+3 6 PushShots ..\Simulator\PushShots.spd 0 1053162640 PushShots ""
+1 2 Strategy1 Strategy1.sbk 0 1511787981 Strategy1 ""
+2 5 Main Strategy1\Main.spr 0 1511787981 Main1 ""
+3 6 UpdateShipParams Strategy1\UpdateShipParams.spd 0 1050425374 UpdateShipParams ""
+3 6 EnemyCenter Strategy1\EnemyCenter.spd 0 1050148454 EnemyCenter ""
+3 6 StrategyStep Strategy1\StrategyStep.spd 0 1051955326 StrategyStep ""
+4 6 SolveCollision Strategy1\SolveCollision.spd 0 1050580174 SolveCollision ""
+4 6 isCollision Strategy1\isCollision.spd 0 1051708678 isCollision ""
+4 6 NewHeadingChange Strategy1\NewHeading.spd 0 1051709342 NewHeadingChange ""
+5 6 CosBetweenVectors Strategy1\CosBetweenVectors.spd 0 1053422188 CosBetweenVectors ""
+4 6 NextDirection Strategy1\NextDirection.spd 0 1049975280 NextDirection ""
+4 6 NextPosition Strategy1\NextPosition.spd 0 1051969650 NextPosition ""
+4 6 NextShipState Strategy1\NextShipState.spd 0 1051704640 NextShipState ""
+4 6 EnemyNotFound Strategy1\EnemyNotFound.spd 0 1051696832 EnemyNotFound ""
+4 6 EnemyFound Strategy1\EnemyFound.spd 0 1051959198 EnemyFound ""
+5 6 ActivateREPAIR Strategy1\ActivateREPAIR.spd 0 1050503108 ActivateREPAIR ""
+5 6 CanShootEnemyCenter Strategy1\CanShootEnemyCenter.spd 0 1050503172 CanShootEnemyCenter ""
+5 6 SortShootList Strategy1\SortShootList.spd 0 1050052454 SortShootList ""
+4 6 OutputOrder Strategy1\OutputOrder.spd 0 1050410414 OutputOrder ""
+4 6 FindStartPoint Strategy1\FindStartPoint.spd 0 1051185186 FindStartPoint ""
+4 6 FindHeadingTarget Strategy1\SearchHeadingTarget.spd 0 1050136238 FindHeadingTarget ""
+4 6 OnLand Strategy1\OnLand.spd 0 1052222042 OnLand ""
+1 2 Strategy2 Strategy2.sbk 0 1511787982 Strategy2 ""
+2 5 Main Strategy2\Main.spr 0 1511788412 Main2 ""
+3 6 UpdateShipParams2 Strategy2\UpdateShipParams.spd 0 1511788413 UpdateShipParams1 ""
+3 6 EnemyCenter2 Strategy2\EnemyCenter.spd 0 1511788413 EnemyCenter1 ""
+3 6 StrategyStep2 Strategy2\StrategyStep.spd 8 1511788413 StrategyStep1 ""
+4 6 SolveCollision2 Strategy2\SolveCollision.spd 0 1511787982 SolveCollision1 ""
+4 6 isCollision2 Strategy2\isCollision.spd 0 1511787982 isCollision1 ""
+4 6 NewHeadingChange2 Strategy2\NewHeading.spd 0 1051713326 NewHeadingChange1 ""
+5 6 CosBetweenVectors2 Strategy2\CosBetweenVectors.spd 0 1053512700 CosBetweenVectors1 ""
+4 6 NextDirection2 Strategy2\NextDirection.spd 0 1051524172 NextDirection1 ""
+4 6 NextPosition2 Strategy2\NextPosition.spd 0 1051973916 NextPosition1 ""
+4 6 NextShipState2 Strategy2\NextShipState.spd 0 1051712760 NextShipState1 ""
+4 6 EnemyNotFound2 Strategy2\EnemyNotFound.spd 0 1147928086 EnemyNotFound1 ""
+4 6 EnemyFound2 Strategy2\EnemyFound.spd 0 1147715016 EnemyFound1 ""
+5 6 ActivateREPAIR2 Strategy2\ActivateREPAIR.spd 0 1051966134 ActivateREPAIR1 ""
+5 6 CanShootEnemyCenter2 Strategy2\CanShootEnemyCenter.spd 0 1051524560 CanShootEnemyCenter1 ""
+5 6 SortShootList2 Strategy2\SortShootList.spd 0 1051524558 SortShootList1 ""
+4 6 OutputOrder2 Strategy2\OutputOrder.spd 0 1051524658 OutputOrder1 ""
+4 6 FindStartPoint2 Strategy2\FindStartPoint.spd 0 1051524658 FindStartPoint1 ""
+4 6 FindHeadingTarget2 Strategy2\SearchHeadingTarget.spd 0 1134139498 FindHeadingTarget1 ""
+4 6 OnLand2 Strategy2\OnLand.spd 0 1147962308 OnLand2 ""
+4 6 SelectSpy Strategy2\SelectSpy.spd 0 1134138062 SelectSpy ""
+[VIEWOPTIONS]
+ShowDirectories=True
+ShowLongMenus=True
+[ANALYSEROPTIONS]
+ASN1KeywordFile=False
+ASN1Parameter=False
+CoderBufferInSDL=Octet-String
+Filter=False
+InstanceFile=False
+[H2SDLOPTIONS]
+AllWarnings=False
+Preprocessor=""
+PreprocessorOptions=""
+TranslateEnum=True
+UseFullPath=True
+UsePreprocessorOptions=False
+[STATEMATRIXOPTIONS]
+[INDEXOPTIONS]
+ShowSelectedTypes=True
+ShowSelectedUses=True
+ShowSelectedDiagrams=True
+FilterTypes=
+FilterUses=
+FilterDiagrams=
+NameFirst=True
+IndexAppearance=
+[PACKAGEGENERATOROPTIONS]
+DuplicateFile=
+[MAKEOPTIONS]
+CCompilerDriver=False
+GenerateEnvFunctions=True
+GenerateEnvHeader=True
+GenerateSignalNumbers=True
+Kernel=SCTAMDEBCOM
+MakefileMode=UserDefined
+TargetLanguage=Cadvanced
+UserMakefile=BattleShips.m
+[PRINTOPTIONS]
+DestinationFormat=PSFile
+FirstPageNo=1
+MarginLeft=100
+MarginLower=250
+MarginRight=100
+MarginUpper=420
+PrinterFile=""
+PrintFrom=0
+PrintTo=0
+PrintToFile=False

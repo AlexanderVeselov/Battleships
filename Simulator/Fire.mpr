@@ -1,0 +1,17 @@
+mscdocument Fire;
+msc Fire;
+Simulator: instance;
+Strategy: instance;
+Strategy: out OrderFireRequest,1(1, 1, MISSILE, "(. (. 5, 5 .) .)") to Simulator;
+Simulator: in OrderFireRequest,1(1, 1, MISSILE, "(. (. 5, 5 .) .)") from Strategy;
+Strategy: out FinishSimulation,2(0, 1) to Simulator;
+Simulator: in FinishSimulation,2(0, 1) from Strategy;
+all: alt begin;
+Simulator: out OrderFireResponse,3(1, 1) to Strategy;
+Strategy: in OrderFireResponse,3(1, 1) from Simulator;
+Simulator: out OrderFireReject,4(1, 1) to Strategy;
+Strategy: in OrderFireReject,4(1, 1) from Simulator;
+alt end;
+Strategy: endinstance;
+Simulator: endinstance;
+endmsc;

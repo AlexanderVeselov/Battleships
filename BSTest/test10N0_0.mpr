@@ -1,0 +1,20 @@
+mscdocument test10;
+msc test10;
+Simulator: instance;
+Strategy: instance;
+Simulator: out /*{@0}*/INITDATACOMPLETE,1 to Strategy;
+Strategy: in /*{@0}*/INITDATACOMPLETE,1 from Simulator;
+Simulator: out /*{@0}*/SHIPSCURRENTSTATE,2(1, "(. (. 1, 1, CRUISER, 8, EAST, 50, (. 82, 70 .), (: 10, 20, 30, 40 :) .), \
+(. 2, 1, CRUISER, 8, WEST, 50, (. 91, 65 .), (: 5, 6, 7, 8 :) .) .)") to Strategy;
+Strategy: in /*{@0}*/SHIPSCURRENTSTATE,2(1, "(. (. 1, 1, CRUISER, 8, EAST, 50, (. 82, 70 .), (: 10, 20, 30, 40 :) .), \
+(. 2, 1, CRUISER, 8, WEST, 50, (. 91, 65 .), (: 5, 6, 7, 8 :) .) .)") from Simulator;
+Simulator: out /*{@0}*/STARTSIMULATION,3(0) to Strategy;
+Strategy: in /*{@0}*/STARTSIMULATION,3(0) from Simulator;
+Strategy: out /*{@0}*/FINISHSIMULATION,4(0, 1) to Simulator;
+Simulator: in /*{@0}*/FINISHSIMULATION,4(0, 1) from Strategy;
+Simulator: out /*{@0}*/STRATEGYVICTORY,5(1) to Strategy;
+Strategy: in /*{@0}*/STRATEGYVICTORY,5(1) from Simulator;
+Simulator: endinstance;
+Strategy: endinstance;
+endmsc;
+

@@ -1,0 +1,11 @@
+
+USERTARGET = C:\Battleships\Simulator\target\Model_env$(sctOEXTENSION)
+USERLIBRARIES = -lm
+
+C:\Battleships\Simulator\target\Model_env$(sctOEXTENSION): C:\Battleships\Simulator\target\Model_env.c C:\Battleships\Simulator\target\Model.ifc
+	$(sctCC) @<<
+	$(sctCPPFLAGS) $(sctCCFLAGS)
+	$(sctIFDEF)
+	/FoC:\Battleships\Simulator\target\Model_env$(sctOEXTENSION)
+	C:\Battleships\Simulator\target\Model_env.c
+<<

@@ -1,0 +1,90 @@
+SDT-SYSTEM-4.3
+[DRIVES]
+[SOURCE-TARGET-DIRECTORY]
+SourceDirectory=C:\Battleships\Strategy\
+TargetDirectory=C:\Battleships\Strategy\target\
+[DIAGRAMS]
+0 11 ctypes c:\Telelogic\SDL_TTCN_Suite4.3\sdt\include\ADT\ctypes.sun 0 998122282 ctypes ""
+0 11 BasicTypes ..\Packages\BasicTypes.sun 0 1050914734 BasicTypes ""
+1 51 ConfigFile ..\Config\ConfigFile.pr 0 1050572051 ConfigFile ""
+1 19 h2i ..\Packages\h2i.sop 0 1049104912 h2i ""
+1 19 i2h ..\Packages\i2h.sop 0 1049104930 i2h ""
+1 19 d2i ..\Packages\d2i.sop 0 1049104942 d2i ""
+1 19 i2d ..\Packages\i2d.sop 0 1049103778 i2d ""
+1 19 nw2i ..\Packages\nw2i.sop 0 1049104956 nw2i ""
+1 19 i2nw ..\Packages\i2nw.sop 0 1049104362 i2nw ""
+1 19 ns2i ..\Packages\ns2i.sop 0 1049104424 ns2i ""
+1 19 i2ns ..\Packages\i2ns.sop 0 1049104556 i2ns ""
+0 1 Model Model.ssy 8 1051515902 Model ""
+1 2 Strategy Strategy.sbk 0 1051693406 Strategy ""
+2 5 Main Main.spr 0 1147715419 Main ""
+3 6 StrategyStep2 StrategyStep.spd 0 1147633084 StrategyStep2 ""
+4 6 EnemyFound2 EnemyFound.spd 0 1147715015 EnemyFound2 ""
+5 6 ActivateREPAIR2 ActivateREPAIR.spd 0 1051966134 ActivateREPAIR2 ""
+5 6 CanShootEnemyCenter2 CanShootEnemyCenter.spd 0 1051524560 CanShootEnemyCenter2 ""
+5 6 SortShootList2 SortShootList.spd 0 1051524558 SortShootList2 ""
+4 6 EnemyNotFound2 EnemyNotFound.spd 0 1147928240 EnemyNotFound2 ""
+4 6 NextPosition2 NextPosition.spd 0 1051973916 NextPosition2 ""
+4 6 NextDirection2 NextDirection.spd 0 1051524172 NextDirection2 ""
+4 6 NewHeadingChange2 NewHeading.spd 0 1051713326 NewHeadingChange2 ""
+5 6 CosBetweenVectors2 CosBetweenVectors.spd 0 1053512700 CosBetweenVectors2 ""
+4 6 isCollision2 isCollision.spd 0 1051712974 isCollision2 ""
+4 6 SolveCollision2 SolveCollision.spd 0 1051523962 SolveCollision2 ""
+4 6 NextShipState2 NextShipState.spd 0 1051712760 NextShipState2 ""
+4 6 OutputOrder2 OutputOrder.spd 0 1051524658 OutputOrder2 ""
+4 6 FindHeadingTarget2 SearchHeadingTarget.spd 0 1134139498 FindHeadingTarget2 ""
+4 6 FindStartPoint2 FindStartPoint.spd 0 1051524658 FindStartPoint2 ""
+4 6 OnLand2 OnLand.spd 0 1147962306 OnLand2 ""
+4 6 SelectSpy SelectSpy.spd 0 1134138062 SelectSpy ""
+3 6 EnemyCenter2 EnemyCenter.spd 0 1051523850 EnemyCenter2 ""
+3 6 UpdateShipParams2 UpdateShipParams.spd 0 1147714953 UpdateShipParams2 ""
+2 5 Sim Sim.spr 0 1052208310 Sim ""
+[VIEWOPTIONS]
+ShowDirectories=True
+ShowLongMenus=True
+[ANALYSEROPTIONS]
+CaseSensitiveSDL=True
+ASN1KeywordFile=False
+ASN1Parameter=False
+CoderBufferInSDL=Octet-String
+Filter=False
+InstanceFile=False
+[H2SDLOPTIONS]
+AllWarnings=False
+Preprocessor=""
+PreprocessorOptions=""
+TranslateEnum=True
+UseFullPath=True
+UsePreprocessorOptions=False
+[STATEMATRIXOPTIONS]
+[INDEXOPTIONS]
+ShowSelectedTypes=True
+ShowSelectedUses=True
+ShowSelectedDiagrams=True
+FilterTypes=
+FilterUses=
+FilterDiagrams=
+NameFirst=True
+IndexAppearance=
+[PACKAGEGENERATOROPTIONS]
+DuplicateFile=
+[MAKEOPTIONS]
+CCompilerDriver=False
+GenerateEnvFunctions=True
+GenerateEnvHeader=True
+GenerateSignalNumbers=True
+Kernel=SCTAMDEBCOM
+MakefileMode=UserDefined
+TargetLanguage=Cadvanced
+UserMakefile=Model.m
+[PRINTOPTIONS]
+DestinationFormat=PSFile
+FirstPageNo=1
+MarginLeft=100
+MarginLower=250
+MarginRight=100
+MarginUpper=420
+PrinterFile=""
+PrintFrom=0
+PrintTo=0
+PrintToFile=False

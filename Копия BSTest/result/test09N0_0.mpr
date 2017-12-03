@@ -1,0 +1,21 @@
+mscdocument test09;
+msc test09;
+Simulator: instance;
+Strategy: instance;
+Simulator: out /*{@0}*/INITDATACOMPLETE,1 to Strategy;
+Strategy: in /*{@0}*/INITDATACOMPLETE,1 from Simulator;
+Simulator: out /*{@0}*/SHIPSCURRENTSTATE,2(1, "(. (. 1, 1, CRUISER, 8, EAST, 50, (. 82, 70 .), (: 0, 0, 0, 0 :) .) .)") to Strategy;
+Strategy: in /*{@0}*/SHIPSCURRENTSTATE,2(1, "(. (. 1, 1, CRUISER, 8, EAST, 50, (. 82, 70 .), (: 0, 0, 0, 0 :) .) .)") from Simulator;
+Simulator: out /*{@0}*/VISIBLESHIP,3(1, "(. (. 1, 2, CRUISER, 0, NORTH,(. 90, 70 .) .),(. 2, 2, CRUISER, 0, NORTH,(. 87, 75 .) .),(. 2, 2, CRUISER, 0, NORTH,(. 87, 65 .) .) .)") to Strategy;
+Strategy: in /*{@0}*/VISIBLESHIP,3(1, "(. (. 1, 2, CRUISER, 0, NORTH,(. 90, 70 .) .),(. 2, 2, CRUISER, 0, NORTH,(. 87, 75 .) .),(. 2, 2, CRUISER, 0, NORTH,(. 87, 65 .) .) .)") from Simulator;
+Simulator: out /*{@0}*/STARTSIMULATION,4(0) to Strategy;
+Strategy: in /*{@0}*/STARTSIMULATION,4(0) from Simulator;
+Strategy: out /*{@0}*/ORDERSPEEDREQUEST,5(1,1,-1.0) to Simulator;
+Simulator: in /*{@0}*/ORDERSPEEDREQUEST,5(1,1,-1.0) from Strategy;
+Strategy: out /*{@0}*/FINISHSIMULATION,6(0, 1) to Simulator;
+Simulator: in /*{@0}*/FINISHSIMULATION,6(0, 1) from Strategy;
+Simulator: out /*{@0}*/STRATEGYVICTORY,7(1) to Strategy;
+Strategy: in /*{@0}*/STRATEGYVICTORY,7(1) from Simulator;
+Simulator: endinstance;
+Strategy: endinstance;
+endmsc
