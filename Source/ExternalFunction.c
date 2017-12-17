@@ -19,3 +19,4 @@ SDL_Integer getHeading(void)
 {
 	return (SDL_Integer)(rand()%8);
 }
+

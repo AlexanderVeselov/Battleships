@@ -818,7 +818,7 @@ XCONST struct xSortIdStruct ySrtR_z_BasicTypes_1F_tXCoordinate = {xSortEC
   xIdNames("tXCoordinate") XCOMMON_EXTRAS xFreF(0) xAssF(0) xEqF(0)
   xTestF(yTest_z_BasicTypes_1F_tXCoordinate),
   (xptrint)sizeof(z_BasicTypes_1F_tXCoordinate), xSyntype, &xSrtR_SDL_Integer,
-  &xSrtR_SDL_Integer, SDL_INTEGER_LIT(0), SDL_INTEGER_LIT(200), 0, 0
+  &xSrtR_SDL_Integer, SDL_INTEGER_LIT(-1), SDL_INTEGER_LIT(201), 0, 0
   xRaWF((tSDLTypeInfo *)&ySDL_z_BasicTypes_1F_tXCoordinate) XSRT_EXTRAS};
 #endif
 
@@ -827,10 +827,10 @@ XCONST struct xSortIdStruct ySrtR_z_BasicTypes_1F_tXCoordinate = {xSortEC
 xbool yTest_z_BasicTypes_1F_tXCoordinate(void * yExpr)
 {
   {
-    if (xLE_SDL_Integer(SDL_INTEGER_LIT(0),
+    if (xLE_SDL_Integer(SDL_INTEGER_LIT(-1),
       *(z_BasicTypes_1F_tXCoordinate *)yExpr))
       if (xLE_SDL_Integer(*(z_BasicTypes_1F_tXCoordinate *)yExpr,
-      SDL_INTEGER_LIT(200)))
+      SDL_INTEGER_LIT(201)))
         return (xbool)1;
   }
   return (xbool)0;
@@ -857,7 +857,7 @@ z_BasicTypes_1F_tXCoordinate yTstI_z_BasicTypes_1F_tXCoordinate
   if (! yTest_z_BasicTypes_1F_tXCoordinate((void *)&yExpr) ) {
     xErrorIndex((tSDLTypeInfo *)&ySDL_z_BasicTypes_1F_tXCoordinate,
   (void *)&yExpr);
-    return SDL_INTEGER_LIT(0);
+    return SDL_INTEGER_LIT(-1);
   }
   return yExpr;
 }
@@ -882,7 +882,7 @@ XCONST struct xSortIdStruct ySrtR_z_BasicTypes_1G_tYCoordinate = {xSortEC
   xIdNames("tYCoordinate") XCOMMON_EXTRAS xFreF(0) xAssF(0) xEqF(0)
   xTestF(yTest_z_BasicTypes_1G_tYCoordinate),
   (xptrint)sizeof(z_BasicTypes_1G_tYCoordinate), xSyntype, &xSrtR_SDL_Integer,
-  &xSrtR_SDL_Integer, SDL_INTEGER_LIT(0), SDL_INTEGER_LIT(100), 0, 0
+  &xSrtR_SDL_Integer, SDL_INTEGER_LIT(-1), SDL_INTEGER_LIT(101), 0, 0
   xRaWF((tSDLTypeInfo *)&ySDL_z_BasicTypes_1G_tYCoordinate) XSRT_EXTRAS};
 #endif
 
@@ -891,10 +891,10 @@ XCONST struct xSortIdStruct ySrtR_z_BasicTypes_1G_tYCoordinate = {xSortEC
 xbool yTest_z_BasicTypes_1G_tYCoordinate(void * yExpr)
 {
   {
-    if (xLE_SDL_Integer(SDL_INTEGER_LIT(0),
+    if (xLE_SDL_Integer(SDL_INTEGER_LIT(-1),
       *(z_BasicTypes_1G_tYCoordinate *)yExpr))
       if (xLE_SDL_Integer(*(z_BasicTypes_1G_tYCoordinate *)yExpr,
-      SDL_INTEGER_LIT(100)))
+      SDL_INTEGER_LIT(101)))
         return (xbool)1;
   }
   return (xbool)0;
@@ -921,7 +921,7 @@ z_BasicTypes_1G_tYCoordinate yTstI_z_BasicTypes_1G_tYCoordinate
   if (! yTest_z_BasicTypes_1G_tYCoordinate((void *)&yExpr) ) {
     xErrorIndex((tSDLTypeInfo *)&ySDL_z_BasicTypes_1G_tYCoordinate,
   (void *)&yExpr);
-    return SDL_INTEGER_LIT(0);
+    return SDL_INTEGER_LIT(-1);
   }
   return yExpr;
 }
@@ -3410,7 +3410,7 @@ static XCONST struct xVarIdStruct yVarR_z_BasicTypes_0XS_Ammunition =
 /*****
 * NEWTYPE tEnemyShip  (BODY section)
 * <<PACKAGE BasicTypes>>
-* #SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,165),1,9)
+* #SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,180),1,9)
 ******/
 
 /* *** tEnemyShip *** */

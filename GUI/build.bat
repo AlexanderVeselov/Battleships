@@ -1,1 +1,1 @@
-@C:\JBuilder6\jdk1.3.1\bin\javac *.java
+@"C:\Program Files\Java\jdk1.8.0_60\bin\javac" *.java

@@ -104,13 +104,13 @@ public class BattleField extends JComponent implements Scrollable {
 					g2.setPaint(normal);					
 					break;
 				case MapConstants.LAND: 
-					g2.setPaint(tpLand);					
+					g2.setPaint(land);					
 					break;
 				case MapConstants.DEEPLY: 
-					g2.setPaint(tpDeeply);
+					g2.setPaint(deeply);
 					break;
 				case MapConstants.VERY_DEEPLY: 
-					g2.setPaint(tpVeryDeeply);
+					g2.setPaint(veryDeeply);
 					break;
 				default:
 					g2.setPaint(land);					

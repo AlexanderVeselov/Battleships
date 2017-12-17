@@ -1,3 +1,3 @@
-OrgMainWindow 207 54 1542 854 C:\BattleShips\BattleShips\BattleShips.sdt
-SDLEWindow 46 1 1721 943 1 C:\Battleships\BattleShips\Strategy2\UpdateShipParams.spd
-TextEWindow 44 66 960 593 "" C:\Battleships\Config\ConfigFile.pr
+OrgMainWindow 781 15 1064 845 C:\BattleShips\BattleShips\BattleShips.sdt
+SDLEWindow 133 35 1571 889 2 C:\Battleships\BattleShips\Strategy2\Main.spr
+MSCEWindow 112 20 1440 889 1 

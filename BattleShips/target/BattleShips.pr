@@ -302,10 +302,10 @@ syntype tLUWeaponry = Integer
 endsyntype;
 /*#SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(1),290(20,85))*/
 syntype tXCoordinate = Integer
-  constants 0:MaxXCoordinate
+  constants -1:MaxXCoordinate+1
 endsyntype;
 syntype tYCoordinate = Integer
-  constants 0:MaxYCoordinate
+  constants -1:MaxYCoordinate+1
 endsyntype;
 /*#SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(1),374(80,100))*/
 syntype tFactorAcceleration = Real
@@ -442,7 +442,7 @@ newtype tShipCurrentState
     Coordinates tCoordinates;
     Ammunition tArrayAmountAmmunition;
 endnewtype;
-/*#SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,165))*/
+/*#SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,180))*/
 newtype tEnemyShip
   struct
     ShipId tShipId;
@@ -1102,7 +1102,7 @@ dcl
   rHeadingChange tHeadingChange,
   rNameWeaponry tNameWeaponry,
   rStringShotsList tStringShotsList;
-/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(1),998(115,50))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(1),998(115,55))*/
 imported gASI tArraySI;
 dcl
   rASI tArraySI;
@@ -1405,36 +1405,36 @@ TurnRequest
 /*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),695(5,130))*/
 nextstate /*#E*/ 
 -;
-/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),692(65,100))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),692(90,100))*/
 input /*#E*/ 
  
 OrderTurnResponse(
 rShipId,
 rStrategyId)
 ;
-/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),686(65,115))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),686(90,115))*/
 call /*#E*/ 
  
 SendOrder_
 TurnResponse
 ;
-/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),680(65,130))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),680(90,130))*/
 nextstate /*#E*/ 
 -;
-/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),677(125,100))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),677(140,100))*/
 input /*#E*/ 
  
 OrderTurnReject(
 rShipId,
 rStrategyId)
 ;
-/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),671(125,115))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),671(140,115))*/
 call /*#E*/ 
  
 SendOrder_
 TurnReject
 ;
-/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),665(125,130))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),665(140,130))*/
 nextstate /*#E*/ 
 -;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Router.spr(4),710(5,85))*/
@@ -2203,7 +2203,7 @@ dcl
     gShots tStringShotParameters,
     gASI tArraySI;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(1),1097(90,55))*/
-synonym NAMESHIP_NUM Integer = 5;
+synonym NAMESHIP_NUM Integer = 3;
 synonym CHECK_ITER Integer = 10;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(1),1787(90,70))*/
 newtype tErrorName
@@ -2231,7 +2231,10 @@ procedure sdl_sqrt;
   returns Integer;
 external;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(1),254(5,25))*/
-procedure InitDataShipsWeaponry referenced;
+procedure InitDataShipsWeaponry referenced 
+/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(1),2297(65,25))*/
+/* Read config files */
+;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(1),395(5,40))*/
 procedure InitStrategyFleet referenced;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(1),842(5,55))*/
@@ -2342,14 +2345,8 @@ InitSocketComplete(errcode)
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(3),1547(75,70))*/
 decision /*#E*/ 
 errcode;
-/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(3),1553(87,80))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(3),1553(87,82))*/
 (= EC_OK):
-/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(3),656(75,85))*/
-output /*#E*/ 
-messageLog 
-('Start SendCurrentState, SetVisibility
-  and SendVisibleShips procedures')
-;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(3),674(75,100))*/
 task {/*#E*/ 
  
@@ -2442,6 +2439,17 @@ nextstate /*#E*/
 WaitSocketInit;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(3),581(80,10))*/
 endconnection PM1;
+/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),2267(5,180))*/
+state /*#E*/ 
+FIN;
+/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),2282(5,195))*/
+input /*#E*/ 
+*;
+/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),2291(5,210))*/
+nextstate /*#E*/ 
+-;
+/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),2267(5,180))*/
+endstate;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),1703(80,115))*/
 state /*#E*/ 
 WaitSendData2;
@@ -2462,12 +2470,6 @@ decision /*#E*/
 errcode;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),2186(117,172))*/
 (= EC_OK):
-/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),1901(105,180))*/
-output /*#E*/ 
-messageLog 
-( 'Start SendCurrentState, SetVisibility
-  and SendVisibleShips procedures' )
-;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),1895(105,195))*/
 task {/*#E*/ 
  
@@ -2499,7 +2501,7 @@ QUIT;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),1883(80,145))*/
 enddecision;
-grst118:
+grst792:
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),1820(5,160))*/
 task {/*#E*/ 
 call FreeAll;};
@@ -2507,17 +2509,6 @@ call FreeAll;};
 nextstate /*#E*/ 
 FIN;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),1703(80,115))*/
-endstate;
-/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),2267(5,180))*/
-state /*#E*/ 
-FIN;
-/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),2282(5,195))*/
-input /*#E*/ 
-*;
-/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),2291(5,210))*/
-nextstate /*#E*/ 
--;
-/*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),2267(5,180))*/
 endstate;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),872(85,20))*/
 connection /*#E*/ 
@@ -2570,7 +2561,7 @@ export( gASI );
 };
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),1820(5,160))*/
 join /*#E*/ 
-grst118;
+grst792;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(4),872(85,20))*/
 endconnection PM2;
 /*#SDTREF(SDL,C:\Battleships\Simulator\Main.spr(5),2099(75,95))*/
@@ -2838,7 +2829,7 @@ return /*#E*/
 EC_FAULT;
 /*#SDTREF(SDL,C:\Battleships\Simulator\InitStrategyFleet.spd(1),734(95,45))*/
 enddecision;
-grst119:
+grst793:
 /*#SDTREF(SDL,C:\Battleships\Simulator\InitStrategyFleet.spd(1),248(95,130))*/
 decision /*#E*/ 
  
@@ -2898,7 +2889,7 @@ ISF2;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\InitStrategyFleet.spd(1),248(95,130))*/
 join /*#E*/ 
-grst119;
+grst793;
 /*#SDTREF(SDL,C:\Battleships\Simulator\InitStrategyFleet.spd(2),584(40,30))*/
 connection /*#E*/ 
 ISF2:
@@ -2925,7 +2916,7 @@ Deep := d2i(gShipsCharacter(shipType)!MaxDeep);
 maxShips := call GetMaxShips(shipType);
 i := 1;
 };
-grst120:
+grst794:
 /*#SDTREF(SDL,C:\Battleships\Simulator\InitStrategyFleet.spd(2),476(35,115))*/
 decision /*#E*/ 
  
@@ -2972,7 +2963,7 @@ enddecision;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\InitStrategyFleet.spd(2),476(35,115))*/
 join /*#E*/ 
-grst120;
+grst794;
 /*#SDTREF(SDL,C:\Battleships\Simulator\InitStrategyFleet.spd(2),584(40,30))*/
 endconnection ISF2;
 /*#SDTREF(SDL,C:\Battleships\Simulator\InitStrategyFleet.spd,4)*/
@@ -2994,7 +2985,7 @@ task {/*#E*/
 nST := 1;
 Deep := 0;
 };
-grst121:
+grst795:
 /*#SDTREF(SDL,C:\Battleships\Simulator\InitRD.spd(1),134(85,60))*/
 decision /*#E*/ 
  
@@ -3048,7 +3039,7 @@ nST := nST + 1
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\InitRD.spd(1),134(85,60))*/
 join /*#E*/ 
-grst121;
+grst795;
 /*#SDTREF(SDL,C:\Battleships\Simulator\InitRD.spd,4)*/
 endprocedure InitRD;
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetMaxShips.spd,4)*/
@@ -3225,7 +3216,7 @@ enddecision;
 (true):
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetCoordinate.spd(2),1313(90,45))*/
 enddecision;
-grst122:
+grst796:
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetCoordinate.spd(2),1325(90,65))*/
 decision /*#E*/ 
  
@@ -3285,7 +3276,7 @@ cCoord!x := cCoord!x + 1
 ;
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetCoordinate.spd(2),1325(90,65))*/
 join /*#E*/ 
-grst122;
+grst796;
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetCoordinate.spd(2),1325(90,65))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetCoordinate.spd(2),1292(95,30))*/
@@ -3308,7 +3299,7 @@ task {/*#E*/
 length := length(gShips);
 iBP := 1;
 };
-grst123:
+grst797:
 /*#SDTREF(SDL,C:\Battleships\Simulator\IsBusyPoint.spd(1),269(60,55))*/
 decision /*#E*/ 
  
@@ -3344,7 +3335,7 @@ enddecision;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\IsBusyPoint.spd(1),269(60,55))*/
 join /*#E*/ 
-grst123;
+grst797;
 /*#SDTREF(SDL,C:\Battleships\Simulator\IsBusyPoint.spd,4)*/
 endprocedure IsBusyPoint;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetVisibility.spd,4)*/
@@ -3368,7 +3359,7 @@ task {/*#E*/
 n := length( gShips );
 ins := 1;
 };
-grst124:
+grst798:
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetVisibility.spd(1),155(85,55))*/
 decision /*#E*/ 
 ins <= n;
@@ -3384,7 +3375,7 @@ task {/*#E*/
 jns := ins + 1;};
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetVisibility.spd(1),155(85,55))*/
 enddecision;
-grst125:
+grst799:
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetVisibility.spd(1),482(85,90))*/
 decision /*#E*/ 
 jns <= n;
@@ -3395,7 +3386,7 @@ task /*#E*/
 ins := ins + 1;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetVisibility.spd(1),155(85,55))*/
 join /*#E*/ 
-grst124;
+grst798;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetVisibility.spd(1),509(97,102))*/
 (true):
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetVisibility.spd(1),239(85,120))*/
@@ -3458,7 +3449,7 @@ task /*#E*/
 jns := jns + 1;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetVisibility.spd(1),482(85,90))*/
 join /*#E*/ 
-grst125;
+grst799;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetVisibility.spd(1),482(85,90))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetVisibility.spd,4)*/
@@ -3474,7 +3465,7 @@ task {/*#E*/
 n := length( gShips );
 ins := 1;
 };
-grst126:
+grst800:
 /*#SDTREF(SDL,C:\Battleships\Simulator\zeroizeVisibility.spd(1),137(65,60))*/
 decision /*#E*/ 
 ins <= n;
@@ -3490,7 +3481,7 @@ task /*#E*/
 jns := 1;
 /*#SDTREF(SDL,C:\Battleships\Simulator\zeroizeVisibility.spd(1),137(65,60))*/
 enddecision;
-grst127:
+grst801:
 /*#SDTREF(SDL,C:\Battleships\Simulator\zeroizeVisibility.spd(1),143(65,95))*/
 decision /*#E*/ 
  
@@ -3503,7 +3494,7 @@ task /*#E*/
 ins := ins + 1;
 /*#SDTREF(SDL,C:\Battleships\Simulator\zeroizeVisibility.spd(1),137(65,60))*/
 join /*#E*/ 
-grst126;
+grst800;
 /*#SDTREF(SDL,C:\Battleships\Simulator\zeroizeVisibility.spd(1),164(77,107))*/
 (true):
 /*#SDTREF(SDL,C:\Battleships\Simulator\zeroizeVisibility.spd(1),161(65,115))*/
@@ -3514,7 +3505,7 @@ jns := jns + 1;
 };
 /*#SDTREF(SDL,C:\Battleships\Simulator\zeroizeVisibility.spd(1),143(65,95))*/
 join /*#E*/ 
-grst127;
+grst801;
 /*#SDTREF(SDL,C:\Battleships\Simulator\zeroizeVisibility.spd(1),143(65,95))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\zeroizeVisibility.spd,4)*/
@@ -3535,7 +3526,7 @@ task {/*#E*/
 n := length(gShips);
 i := 1;
 };
-grst128:
+grst802:
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendCurrentState.spd(1),143(90,60))*/
 decision /*#E*/ 
 i <= n;
@@ -3555,7 +3546,7 @@ shCS!StrategyId := gShips(i)!StrategyId;
 };
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendCurrentState.spd(1),143(90,60))*/
 enddecision;
-grst129:
+grst803:
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendCurrentState.spd(1),131(90,110))*/
 decision /*#E*/ 
  
@@ -3570,7 +3561,7 @@ ShipsCurrentState(strId, shSCS)
 ;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendCurrentState.spd(1),143(90,60))*/
 join /*#E*/ 
-grst128;
+grst802;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendCurrentState.spd(1),185(102,122))*/
 (true):
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendCurrentState.spd(1),119(90,130))*/
@@ -3590,7 +3581,7 @@ i := i + 1;
 };
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendCurrentState.spd(1),131(90,110))*/
 join /*#E*/ 
-grst129;
+grst803;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendCurrentState.spd(1),131(90,110))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendCurrentState.spd,4)*/
@@ -3611,7 +3602,7 @@ task {/*#E*/
 n := length(gShips);
 j := 1;
 };
-grst130:
+grst804:
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendVisibleShips.spd(1),134(75,55))*/
 decision /*#E*/ 
  
@@ -3632,7 +3623,7 @@ shSES := empty;
 };
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendVisibleShips.spd(1),134(75,55))*/
 enddecision;
-grst131:
+grst805:
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendVisibleShips.spd(1),152(75,90))*/
 decision /*#E*/ 
 i <= n;
@@ -3667,7 +3658,7 @@ task /*#E*/
 i := i + 1;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendVisibleShips.spd(1),152(75,90))*/
 join /*#E*/ 
-grst131;
+grst805;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendVisibleShips.spd(1),254(17,97))*/
 (false):
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendVisibleShips.spd(1),281(10,125))*/
@@ -3691,7 +3682,7 @@ task /*#E*/
 j := j + 1;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendVisibleShips.spd(1),134(75,55))*/
 join /*#E*/ 
-grst130;
+grst804;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendVisibleShips.spd(1),152(75,90))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendVisibleShips.spd,4)*/
@@ -3870,27 +3861,27 @@ shipOrders(shId)!FA := shFA;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),845(10,120))*/
 join /*#E*/ 
 SI2;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1187(45,90))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1187(45,117))*/
 (false):
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),803(5,75))*/
 enddecision;
-grst132:
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1181(80,120))*/
+grst806:
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1181(30,125))*/
 nextstate /*#E*/ 
 -;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),317(105,60))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),317(70,60))*/
 input /*#E*/ 
  
 OrderTurnRequest(shId, strId, shHC)
 ;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),860(105,75))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),860(70,75))*/
 decision /*#E*/ 
  
 shipOrders(shId)!IsOrder = false
 ;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),863(117,87))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),863(82,87))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),311(105,100))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),311(70,100))*/
 task {/*#E*/ 
  
 shipOrders(shId)!Order := TURN;
@@ -3899,13 +3890,13 @@ shipOrders(shId)!HC := shHC;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),875(110,120))*/
 join /*#E*/ 
 SI2;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1184(100,75))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1184(70,125))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),860(105,75))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),860(70,75))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1181(80,120))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1181(30,125))*/
 join /*#E*/ 
-grst132;
+grst806;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),332(80,40))*/
 endstate;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),920(80,140))*/
@@ -3921,7 +3912,7 @@ decision /*#E*/
  
 shipOrders(shId)!IsOrder = false
 ;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1199(7,175))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1199(40,142))*/
 (false):
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),974(27,187))*/
 (true):
@@ -3937,9 +3928,9 @@ join /*#E*/
 SI2;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),962(15,175))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1181(80,120))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1181(30,125))*/
 join /*#E*/ 
-grst132;
+grst806;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),911(110,160))*/
 input /*#E*/ 
  
@@ -3955,7 +3946,7 @@ decision /*#E*/
  
 call IsASIComplete
 ;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1202(105,195))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1202(110,135))*/
 (false):
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),959(122,207))*/
 (true):
@@ -3964,9 +3955,9 @@ join /*#E*/
 SI3;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),890(110,195))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1181(80,120))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),1181(30,125))*/
 join /*#E*/ 
-grst132;
+grst806;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(2),920(80,140))*/
 endstate;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1139(75,30))*/
@@ -4006,26 +3997,26 @@ errcode := call OrderFire(shId, shipOrders(shId)!WN, shipOrders(shId)!SSL)
 ;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1472(70,65))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1538(70,160))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1538(70,180))*/
 decision /*#E*/ 
 errcode;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1544(107,167))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1544(107,187))*/
 (= EC_OK):
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1529(95,175))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1529(95,195))*/
 task /*#E*/ 
  
 shipOrders(shId)!IsOrderPass := true
 ;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1541(32,167))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1541(32,187))*/
 else:
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1535(20,175))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1535(20,195))*/
 output /*#E*/ 
 messageError 
 (call Err2Str)
 ;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1538(70,160))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1538(70,180))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1523(70,195))*/
+/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1523(70,215))*/
 nextstate /*#E*/ 
 -;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(3),1139(75,30))*/
@@ -4045,11 +4036,6 @@ call ChangeCoordinate;
 call CollisionShip;
 call UpdateShots;
 };
-/*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(4),1400(70,85))*/
-output /*#E*/ 
-messageLog 
-('Check all strategies for Lose and Victory')
-;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SimIteration.spd(4),1394(70,100))*/
 task {/*#E*/ 
  
@@ -4081,7 +4067,7 @@ start /*#E*/
 /*#SDTREF(SDL,C:\Battleships\Simulator\NullingSI.spd(1),122(85,45))*/
 task /*#E*/ 
 i := 1;
-grst133:
+grst807:
 /*#SDTREF(SDL,C:\Battleships\Simulator\NullingSI.spd(1),128(85,60))*/
 decision /*#E*/ 
  
@@ -4109,7 +4095,7 @@ i := i + 1;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\NullingSI.spd(1),128(85,60))*/
 join /*#E*/ 
-grst133;
+grst807;
 /*#SDTREF(SDL,C:\Battleships\Simulator\NullingSI.spd,4)*/
 endprocedure NullingSI;
 /*#SDTREF(SDL,C:\Battleships\Simulator\IsASIComplete.spd,4)*/
@@ -4125,7 +4111,7 @@ start /*#E*/
 /*#SDTREF(SDL,C:\Battleships\Simulator\IsASIComplete.spd(1),131(70,45))*/
 task /*#E*/ 
 i := 1;
-grst134:
+grst808:
 /*#SDTREF(SDL,C:\Battleships\Simulator\IsASIComplete.spd(1),137(70,60))*/
 decision /*#E*/ 
  
@@ -4159,7 +4145,7 @@ enddecision;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\IsASIComplete.spd(1),137(70,60))*/
 join /*#E*/ 
-grst134;
+grst808;
 /*#SDTREF(SDL,C:\Battleships\Simulator\IsASIComplete.spd,4)*/
 endprocedure IsASIComplete;
 /*#SDTREF(SDL,C:\Battleships\Simulator\CheckStrategies.spd,4)*/
@@ -4178,7 +4164,7 @@ task {/*#E*/
 i := 1;
 n := length(gShips);
 };
-grst135:
+grst809:
 /*#SDTREF(SDL,C:\Battleships\Simulator\CheckStrategies.spd(1),128(80,60))*/
 decision /*#E*/ 
  
@@ -4193,7 +4179,7 @@ i := 1;
 j := 0;
 ns := 0;
 };
-grst136:
+grst810:
 /*#SDTREF(SDL,C:\Battleships\Simulator\CheckStrategies.spd(1),203(80,100))*/
 decision /*#E*/ 
  
@@ -4249,7 +4235,7 @@ i := i + 1;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\CheckStrategies.spd(1),203(80,100))*/
 join /*#E*/ 
-grst136;
+grst810;
 /*#SDTREF(SDL,C:\Battleships\Simulator\CheckStrategies.spd(1),155(92,72))*/
 (true):
 /*#SDTREF(SDL,C:\Battleships\Simulator\CheckStrategies.spd(1),152(80,80))*/
@@ -4260,7 +4246,7 @@ i := i + 1;
 };
 /*#SDTREF(SDL,C:\Battleships\Simulator\CheckStrategies.spd(1),128(80,60))*/
 join /*#E*/ 
-grst135;
+grst809;
 /*#SDTREF(SDL,C:\Battleships\Simulator\CheckStrategies.spd(1),128(80,60))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\CheckStrategies.spd(2),419(110,30))*/
@@ -4330,7 +4316,7 @@ start /*#E*/
 /*#SDTREF(SDL,C:\Battleships\Simulator\NullingShipOrders.spd(1),122(70,40))*/
 task /*#E*/ 
 i := 1;
-grst137:
+grst811:
 /*#SDTREF(SDL,C:\Battleships\Simulator\NullingShipOrders.spd(1),128(70,60))*/
 decision /*#E*/ 
  
@@ -4359,7 +4345,7 @@ i := i + 1;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\NullingShipOrders.spd(1),128(70,60))*/
 join /*#E*/ 
-grst137;
+grst811;
 /*#SDTREF(SDL,C:\Battleships\Simulator\NullingShipOrders.spd,4)*/
 endprocedure NullingShipOrders;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendResposeOnOrders.spd,4)*/
@@ -4375,7 +4361,7 @@ start /*#E*/
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendResposeOnOrders.spd(1),128(85,25))*/
 task /*#E*/ 
 i := 1;
-grst138:
+grst812:
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendResposeOnOrders.spd(1),152(85,45))*/
 decision /*#E*/ 
  
@@ -4493,7 +4479,7 @@ EC_OK;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendResposeOnOrders.spd(1),152(85,45))*/
 join /*#E*/ 
-grst138;
+grst812;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SendResposeOnOrders.spd,4)*/
 endprocedure SendResposeOnOrders;
 /*#SDTREF(SDL,C:\Battleships\Simulator\OrderFire.spd,4)*/
@@ -4705,7 +4691,7 @@ task /*#E*/
  
 leng:=length(gShips)
 ;
-grst139:
+grst813:
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetCurrentCoordinate.spd(1),317(60,95))*/
 decision /*#E*/ 
  
@@ -4754,7 +4740,7 @@ return /*#E*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetCurrentCoordinate.spd(1),317(60,95))*/
 join /*#E*/ 
-grst139;
+grst813;
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetCurrentCoordinate.spd,4)*/
 endprocedure GetCurrentCoordinate;
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetProperty.spd,4)*/
@@ -4784,7 +4770,7 @@ task /*#E*/
  
 leng:=length(gShips)
 ;
-grst140:
+grst814:
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetProperty.spd(1),137(70,70))*/
 decision /*#E*/ 
  
@@ -4872,7 +4858,7 @@ false;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetProperty.spd(1),137(70,70))*/
 join /*#E*/ 
-grst140;
+grst814;
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetProperty.spd(2),281(50,45))*/
 connection /*#E*/ 
 L2:
@@ -4944,7 +4930,7 @@ task /*#E*/
  
 leng:=length(gShips)
 ;
-grst141:
+grst815:
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetNumberShip.spd(1),140(65,90))*/
 decision /*#E*/ 
  
@@ -4988,7 +4974,7 @@ return /*#E*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetNumberShip.spd(1),140(65,90))*/
 join /*#E*/ 
-grst141;
+grst815;
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetNumberShip.spd,4)*/
 endprocedure GetNumberShip;
 /*#SDTREF(SDL,C:\Battleships\Simulator\GetAmmunition.spd,4)*/
@@ -5156,7 +5142,7 @@ task {/*#E*/
 i:=1;
 leng:=length(gShips);
 };
-grst142:
+grst816:
 /*#SDTREF(SDL,C:\Battleships\Simulator\OrderTurn.spd(1),134(65,70))*/
 decision /*#E*/ 
  
@@ -5226,7 +5212,7 @@ enddecision;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\OrderTurn.spd(1),134(65,70))*/
 join /*#E*/ 
-grst142;
+grst816;
 /*#SDTREF(SDL,C:\Battleships\Simulator\OrderTurn.spd(2),299(70,45))*/
 connection /*#E*/ 
 L2:
@@ -5307,7 +5293,7 @@ task /*#E*/
  
 leng:=length(gShips)
 ;
-grst143:
+grst817:
 /*#SDTREF(SDL,C:\Battleships\Simulator\OrderSpeed.spd(1),134(85,75))*/
 decision /*#E*/ 
 i<=leng;
@@ -5389,7 +5375,7 @@ EC_FAULT;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\OrderSpeed.spd(1),134(85,75))*/
 join /*#E*/ 
-grst143;
+grst817;
 /*#SDTREF(SDL,C:\Battleships\Simulator\OrderSpeed.spd(2),308(35,45))*/
 connection /*#E*/ 
 L2:
@@ -5445,7 +5431,7 @@ task {/*#E*/
 len := length( gShips );
 i := 1;
 };
-grst144:
+grst818:
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),146(80,55))*/
 decision /*#E*/ 
 i <= len;
@@ -5482,7 +5468,7 @@ speed := fix( float( gShips(i)!Speed )/sqrt2 )
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),146(80,55))*/
 enddecision;
-grst145:
+grst819:
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),164(80,120))*/
 decision /*#E*/ 
  
@@ -5490,13 +5476,13 @@ j <= speed
 ;
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),191(92,130))*/
 (false):
-grst146:
+grst820:
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),677(150,40))*/
 task /*#E*/ 
 i := i + 1;
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),146(80,55))*/
 join /*#E*/ 
-grst144;
+grst818;
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),293(57,127))*/
 (true):
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),287(50,140))*/
@@ -5516,7 +5502,7 @@ task /*#E*/
 j := j + 1;
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),164(80,120))*/
 join /*#E*/ 
-grst145;
+grst819;
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),851(62,165))*/
 (true):
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),839(50,170))*/
@@ -5535,7 +5521,7 @@ len := len - 1;
 };
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),677(150,40))*/
 join /*#E*/ 
-grst146;
+grst820;
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),632(50,155))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\ChangeCoordinate.spd(1),164(80,120))*/
@@ -5977,7 +5963,7 @@ lenship := length( gShips )
 /*#SDTREF(SDL,C:\Battleships\Simulator\UpdateShots.spd(1),1085(90,145))*/
 task /*#E*/ 
 j := 1;
-grst147:
+grst821:
 /*#SDTREF(SDL,C:\Battleships\Simulator\UpdateShots.spd(1),1082(90,160))*/
 decision /*#E*/ 
  
@@ -6012,7 +5998,7 @@ L3;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\UpdateShots.spd(1),1082(90,160))*/
 join /*#E*/ 
-grst147;
+grst821;
 /*#SDTREF(SDL,C:\Battleships\Simulator\UpdateShots.spd(1),209(90,115))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\UpdateShots.spd(1),1199(90,75))*/
@@ -6184,7 +6170,7 @@ start /*#E*/
 /* Обрабатывает столкновения
 кораблей */
 ;
-grst148:
+grst822:
 /*#SDTREF(SDL,C:\Battleships\Simulator\CollisionShip.spd(1),134(70,45))*/
 task {/*#E*/ 
  
@@ -6222,7 +6208,7 @@ return /*#E*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\CollisionShip.spd(1),134(70,45))*/
 join /*#E*/ 
-grst148;
+grst822;
 /*#SDTREF(SDL,C:\Battleships\Simulator\CollisionShip.spd(1),164(82,87))*/
 (true):
 /*#SDTREF(SDL,C:\Battleships\Simulator\CollisionShip.spd(1),161(70,100))*/
@@ -7083,7 +7069,7 @@ start /*#E*/
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetSI.spd(1),122(70,40))*/
 task /*#E*/ 
 i := 1;
-grst149:
+grst823:
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetSI.spd(1),128(70,55))*/
 decision /*#E*/ 
  
@@ -7111,7 +7097,7 @@ i := i + 1;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetSI.spd(1),128(70,55))*/
 join /*#E*/ 
-grst149;
+grst823;
 /*#SDTREF(SDL,C:\Battleships\Simulator\SetSI.spd,4)*/
 endprocedure SetSI;
 /*#SDTREF(SDL,C:\Battleships\Simulator\KillStrategy.spd,4)*/
@@ -7127,7 +7113,7 @@ start /*#E*/
 /*#SDTREF(SDL,C:\Battleships\Simulator\KillStrategy.spd(1),122(90,45))*/
 task /*#E*/ 
 i := 1;
-grst150:
+grst824:
 /*#SDTREF(SDL,C:\Battleships\Simulator\KillStrategy.spd(1),128(90,60))*/
 decision /*#E*/ 
  
@@ -7169,7 +7155,7 @@ i := i + 1;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\KillStrategy.spd(1),128(90,60))*/
 join /*#E*/ 
-grst150;
+grst824;
 /*#SDTREF(SDL,C:\Battleships\Simulator\KillStrategy.spd,4)*/
 endprocedure KillStrategy;
 /*#SDTREF(SDL,C:\Battleships\Simulator\IsWeaponry.spd,4)*/
@@ -7188,7 +7174,7 @@ task {/*#E*/
 i := 1;
 n := length( gShips );
 };
-grst151:
+grst825:
 /*#SDTREF(SDL,C:\Battleships\Simulator\IsWeaponry.spd(1),128(65,55))*/
 decision /*#E*/ 
 i <= n;
@@ -7236,7 +7222,7 @@ enddecision;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\IsWeaponry.spd(1),128(65,55))*/
 join /*#E*/ 
-grst151;
+grst825;
 /*#SDTREF(SDL,C:\Battleships\Simulator\IsWeaponry.spd,4)*/
 endprocedure IsWeaponry;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr,4)*/
@@ -7419,13 +7405,13 @@ output /*#E*/
  
 SendDataComplete(EC_OK)
 ;
-grst152:
+grst826:
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(3),629(25,215))*/
 join /*#E*/ 
 fromSendingData;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(3),812(42,150))*/
 (=rcCommonFault):
-grst153:
+grst827:
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(3),782(105,180))*/
 output /*#E*/ 
  
@@ -7433,14 +7419,14 @@ SendDataComplete(EC_FAULT)
 ;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(3),629(25,215))*/
 join /*#E*/ 
-grst152;
+grst826;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(3),806(20,150))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(3),788(120,102))*/
 (=rcCommonFault):
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(3),782(105,180))*/
 join /*#E*/ 
-grst153;
+grst827;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(3),770(20,95))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(3),623(25,30))*/
@@ -7488,13 +7474,13 @@ output /*#E*/
  
 InitSocketComplete(EC_OK)
 ;
-grst154:
+grst828:
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(4),737(35,210))*/
 join /*#E*/ 
 fromInitSocket;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(4),875(50,160))*/
 (=rcCommonFault):
-grst155:
+grst829:
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(4),659(105,195))*/
 output /*#E*/ 
  
@@ -7502,21 +7488,21 @@ InitSocketComplete(EC_FAULT)
 ;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(4),737(35,210))*/
 join /*#E*/ 
-grst154;
+grst828;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(4),866(30,160))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(4),848(50,120))*/
 (=rcCommonFault):
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(4),659(105,195))*/
 join /*#E*/ 
-grst155;
+grst829;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(4),839(30,120))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(4),692(117,82))*/
 (=rcCommonFault):
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(4),659(105,195))*/
 join /*#E*/ 
-grst155;
+grst829;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(4),668(30,70))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\Simulator\DataSender.spr(4),740(35,25))*/
@@ -7806,7 +7792,7 @@ input /*#E*/
 ShipsCurrentState(StrategyID,
 ShipsCurrentState)
 ;
-grst156:
+grst830:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\Main.spr(3),551(70,105))*/
 call /*#E*/ 
  
@@ -7866,7 +7852,7 @@ ShipsCurrentState)
 ;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\Main.spr(3),551(70,105))*/
 join /*#E*/ 
-grst156;
+grst830;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\Main.spr(3),749(70,195))*/
 input /*#E*/ 
  
@@ -8546,7 +8532,7 @@ NextPoint := ShipsCurrState(index)!Coordinates;
 i := 1;
 maxDeep := d2i(ShipsCharacter(MyShipType)!MaxDeep);
 };
-grst157:
+grst831:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(1),2012(75,140))*/
 decision /*#E*/ 
  
@@ -8565,7 +8551,7 @@ decision /*#E*/
 ;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(1),2054(70,155))*/
 (true):
-grst158:
+grst832:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(1),1709(45,165))*/
 join /*#E*/ 
 P1;
@@ -8597,14 +8583,14 @@ i := i+1;};
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(1),2012(75,140))*/
 join /*#E*/ 
-grst157;
+grst831;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(1),2042(75,155))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(1),2030(70,140))*/
 (false):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(1),1709(45,165))*/
 join /*#E*/ 
-grst158;
+grst832;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(1),2012(75,140))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),509(75,5))*/
@@ -8620,7 +8606,7 @@ NumVisibleShips = 0
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),539(70,35))*/
 task {/*#E*/ 
 i := 1;};
-grst159:
+grst833:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),533(70,50))*/
 task {/*#E*/ 
  
@@ -8652,14 +8638,14 @@ decision /*#E*/
 (true):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),533(70,50))*/
 join /*#E*/ 
-grst159;
+grst833;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),1958(82,110))*/
 (false):
-grst160:
+grst834:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),1919(70,115))*/
 task {/*#E*/ 
 i := 1;};
-grst161:
+grst835:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),1916(70,130))*/
 decision /*#E*/ 
 index = i;
@@ -8709,7 +8695,7 @@ NO_COLLISION;
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),1916(70,130))*/
 join /*#E*/ 
-grst161;
+grst835;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),518(70,100))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),530(70,65))*/
@@ -8718,7 +8704,7 @@ enddecision;
 (true):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),1919(70,115))*/
 join /*#E*/ 
-grst160;
+grst834;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),1961(70,20))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\isCollision.spd(2),509(75,5))*/
@@ -9027,7 +9013,7 @@ maxDeep := d2i(ShipsCharacter(NameShip)!MaxDeep);
 Deep := call getDeepXY(NextPos!x,NextPos!y);
 if (Deep < maxDeep) onLand := true;
 };
-grst162:
+grst836:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextPosition.spd(1),626(70,135))*/
 decision /*#E*/ 
  
@@ -9046,7 +9032,7 @@ decision /*#E*/
 ;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextPosition.spd(1),692(65,150))*/
 (true):
-grst163:
+grst837:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextPosition.spd(1),449(45,160))*/
 return /*#E*/ 
 ;
@@ -9064,14 +9050,14 @@ task {/*#E*/
 i := i+1;};
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextPosition.spd(1),626(70,135))*/
 join /*#E*/ 
-grst162;
+grst836;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextPosition.spd(1),455(70,150))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextPosition.spd(1),695(65,135))*/
 (false):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextPosition.spd(1),449(45,160))*/
 join /*#E*/ 
-grst163;
+grst837;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextPosition.spd(1),626(70,135))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextPosition.spd,4)*/
@@ -9129,7 +9115,7 @@ ShipNextState!Coordinates := call NextPosition
 (OldCoords, OldHeading, ShipNextState!Speed, 
 ShipNextState!TypeShip);
 };
-grst164:
+grst838:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd(1),215(80,205))*/
 return /*#E*/ 
 ;
@@ -9147,7 +9133,7 @@ ShipNextState!TypeShip);
 };
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd(1),215(80,205))*/
 join /*#E*/ 
-grst164;
+grst838;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd(1),179(57,155))*/
 (_LEFT):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd(1),131(45,160))*/
@@ -9162,10 +9148,10 @@ ShipNextState!TypeShip);
 };
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd(1),215(80,205))*/
 join /*#E*/ 
-grst164;
+grst838;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd(1),185(42,180))*/
 else:
-grst165:
+grst839:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd(1),125(30,185))*/
 task {/*#E*/ 
  
@@ -9176,14 +9162,14 @@ OldCoords,OldHeading, OldSpeed, ShipNextState!TypeShip);
 };
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd(1),215(80,205))*/
 join /*#E*/ 
-grst164;
+grst838;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd(1),149(60,80))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd(1),191(55,60))*/
 (false):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd(1),125(30,185))*/
 join /*#E*/ 
-grst165;
+grst839;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd(1),155(60,60))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy1\NextShipState.spd,4)*/
@@ -10175,20 +10161,19 @@ connect St2MsgInt and chStMsg;
 endblock Strategy2;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr,4)*/
 process <<block Strategy2>> Main;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(1),665(90,5))*/
+synonym 
+   MapCenterX Integer = MaxXCoordinate/2,
+   MapCenterY Integer = MaxYCoordinate/2,
+   MaxShipId Integer = (MaxTypeBattleship
+                                  + MaxTypeCruiser
+                                  + MaxTypeDestroyer
+                                  + MaxTypeMissileCutter
+                                  + MaxTypeRepairBoat)*AmountStrategy;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(1),143(5,25))*/
 imported
     gWeaponryCharacter tArrayWeaponryCharacter,
     gShipsCharacter tArrayShipsCharacter;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(1),665(90,25))*/
-synonym 
-   FirstQuaterX Integer = 3*MaxXCoordinate/4,
-   FirstQuaterY Integer = 3*MaxYCoordinate/4,
-   SecondQuaterX Integer = 3*MaxXCoordinate/4,
-   SecondQuaterY Integer = MaxYCoordinate/4,
-   ThirdQuaterX Integer = MaxXCoordinate/4,
-   ThirdQuaterY Integer = MaxYCoordinate/4,
-   FourthQuaterX Integer = MaxXCoordinate/4,
-   FourthQuaterY Integer = 3*MaxYCoordinate/4;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(1),506(5,40))*/
 newtype tOrderType
  literals
@@ -10197,11 +10182,38 @@ newtype tOrderType
     _FIRE,
     _ACCEL;
 endnewtype;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(1),830(60,40))*/
+procedure ConcatStringInt;
+  fpar
+    str Charstring,
+    val Integer;
+  returns Charstring;
+external;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(1),902(100,40))*/
+newtype tCustomShipState
+    struct
+    ShipId tShipId;
+    ReadyToFreeMotion Boolean := false;
+    TargetHeading tHeading;
+    PrevCoords tCoordinates;
+endnewtype;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(1),482(5,70))*/
 newtype tFire
   struct
     List tStringShotsList;
     Weapon tNameWeaponry; 
+endnewtype;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(1),863(60,70))*/
+procedure ConcatStringIntInt;
+  fpar
+    str Charstring,
+    val1 Integer,
+    val2 Integer;
+  returns Charstring;
+external;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(1),905(100,70))*/
+newtype tArrayCustomShipState
+    Array(tShipId, tCustomShipState);
 endnewtype;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(1),479(5,95))*/
 newtype tCommand
@@ -10222,15 +10234,13 @@ dcl
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),620(5,80))*/
 dcl 
    MyCenter tCoordinates,
-   Tick,NumMyShips, NumRepairShips, minSpeed Integer,
-   flagFight Boolean := true,
+   Tick, NumMyShips, NumRepairShips Integer,
    HeadingTarget tCoordinates,
    ShipsCurrentState tStringShipCurrentState,
+   CustomShipState tArrayCustomShipState,
    CommandToShip tArrayCommand,
    StrategyID tStrategyId,
-   spyIndex Integer,
-   firstTact Boolean := true,
-   spySearching Boolean := true;
+   NumShipsInit Integer:= 0;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),635(5,145))*/
 dcl
    EnemyCenter tCoordinates,
@@ -10254,115 +10264,32 @@ procedure UpdateShipParams2 referenced
 /* Инициализация данных 
 о кораблях флота */
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),119(70,10))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),857(85,70))*/
+procedure DebugLogString referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),842(85,85))*/
+procedure DebugLogStringInt referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),860(85,100))*/
+procedure DebugLogStringIntInt referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),920(85,115))*/
+procedure InitCustomShipState referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),914(85,130))*/
+procedure SetShipReadyToFreeMotion referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),917(85,145))*/
+procedure GetShipReadyToFreeMotion referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),908(85,160))*/
+procedure SetShipTargetHeading referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),911(85,175))*/
+procedure GetShipTargetHeading referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),929(85,190))*/
+procedure SetShipPrevCoords referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),935(85,205))*/
+procedure GetShipPrevCoords referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),119(70,5))*/
 start /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),116(70,25))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),116(70,20))*/
 nextstate /*#E*/ 
 Idle;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),116(70,25))*/
-state /*#E*/ 
-Idle;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),182(70,40))*/
-input /*#E*/ 
-InitData_
-Complete;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),149(70,55))*/
-task {/*#E*/ 
- 
-WeaponryCharacter := import(gWeaponryCharacter);
-ShipsCharacter := import(gShipsCharacter);
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),197(70,75))*/
-nextstate /*#E*/ 
-InitComplete;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),116(70,25))*/
-endstate;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),197(70,75))*/
-state /*#E*/ 
-InitComplete;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),584(45,90))*/
-save /*#E*/ 
-VisibleShip;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),284(70,90))*/
-input /*#E*/ 
- 
-ShipsCurrentState(StrategyID,
-ShipsCurrentState)
-;
-grst166:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),551(70,105))*/
-call /*#E*/ 
- 
-UpdateShipParams2
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),311(70,120))*/
-nextstate /*#E*/ 
-IdleVisShips;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),197(70,75))*/
-endstate;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),311(70,120))*/
-state /*#E*/ 
-IdleVisShips;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),326(55,135))*/
-input /*#E*/ 
- 
-StartSimulation(Tick)  
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),206(55,150))*/
-call /*#E*/ 
- 
-StrategyStep2(
-ShipsCurrentState)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),353(55,165))*/
-output /*#E*/ 
- 
-FinishSimulation(Tick, 
-StrategyID)  
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),734(55,180))*/
-nextstate /*#E*/ 
-IdleRes;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),317(85,135))*/
-input /*#E*/ 
- 
-VisibleShip(StrategyID,EnemyShips)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),386(85,150))*/
-call /*#E*/ 
-Enemy_
-Center2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),329(85,165))*/
-nextstate /*#E*/ 
--;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),311(70,120))*/
-endstate;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),734(55,180))*/
-state /*#E*/ 
-IdleRes;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),770(40,195))*/
-input /*#E*/ 
- 
-ShipsCurrentState(
-StrategyID,
-ShipsCurrentState)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),551(70,105))*/
-join /*#E*/ 
-grst166;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),749(70,195))*/
-input /*#E*/ 
- 
-  OrderSpeedResponse, OrderSpeedReject, 
-  OrderTurnResponse, OrderTurnReject, 
-  OrderFireResponse, OrderFireReject, DestroyShip
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),761(70,210))*/
-nextstate /*#E*/ 
--;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),734(55,180))*/
-endstate;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),230(120,10))*/
 state /*#E*/ 
 *;
@@ -10371,11 +10298,105 @@ input /*#E*/
  
 StrategyVictory(StrategyID),
 StrategyLose(StrategyID)
+ 
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),797(110,55))*/
+/* Импорт массивов с характеристиками
+снарядов и кораблей */
 ;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),266(125,40))*/
 stop /*#E*/ 
 ;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),230(120,10))*/
+endstate;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),116(70,20))*/
+state /*#E*/ 
+Idle;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),182(70,35))*/
+input /*#E*/ 
+InitDataComplete;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),149(55,50))*/
+task {/*#E*/ 
+WeaponryCharacter := import(gWeaponryCharacter);
+ShipsCharacter := import(gShipsCharacter);};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),197(70,65))*/
+nextstate /*#E*/ 
+InitComplete;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),116(70,20))*/
+endstate;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),197(70,65))*/
+state /*#E*/ 
+InitComplete;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),284(65,80))*/
+input /*#E*/ 
+ShipsCurrentState(StrategyID,
+ShipsCurrentState);
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),923(65,95))*/
+call /*#E*/ 
+InitCustomShipState;
+grst840:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),551(65,110))*/
+call /*#E*/ 
+UpdateShipParams2;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),311(70,125))*/
+nextstate /*#E*/ 
+IdleVisShips;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),584(130,80))*/
+save /*#E*/ 
+VisibleShip;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),197(70,65))*/
+endstate;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),311(70,125))*/
+state /*#E*/ 
+IdleVisShips;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),326(45,140))*/
+input /*#E*/ 
+StartSimulation(Tick) ;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),206(35,155))*/
+call /*#E*/ 
+StrategyStep2(ShipsCurrentState);
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),353(45,170))*/
+output /*#E*/ 
+FinishSimulation(Tick, 
+StrategyID)  ;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),734(45,185))*/
+nextstate /*#E*/ 
+IdleRes;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),317(85,155))*/
+input /*#E*/ 
+VisibleShip(StrategyID,
+EnemyShips);
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),386(85,170))*/
+call /*#E*/ 
+EnemyCenter2;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),329(85,185))*/
+nextstate /*#E*/ 
+-;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),311(70,125))*/
+endstate;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),734(45,185))*/
+state /*#E*/ 
+IdleRes;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),749(60,200))*/
+input /*#E*/ 
+ 
+  OrderSpeedResponse, OrderSpeedReject, 
+  OrderTurnResponse, OrderTurnReject, 
+  OrderFireResponse, OrderFireReject, DestroyShip
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),761(60,220))*/
+nextstate /*#E*/ 
+-;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),869(20,205))*/
+input /*#E*/ 
+ShipsCurrentState(StrategyID,
+ShipsCurrentState);
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),938(25,220))*/
+task /*#E*/ 
+'';
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),551(65,110))*/
+join /*#E*/ 
+grst840;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(3),734(45,185))*/
 endstate;
 
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Main.spr(2),641(5,25))*/
@@ -10405,7 +10426,6 @@ task {/*#E*/
 NumVisibleShips := 0;
 NumMyShips := length(ShipsCurrentState);
 NumRepairShips := 0;
-minSpeed := ShipsCharacter(ShipsCurrentState(1)!TypeShip)!MaxSpeed;
 for (i:=1, i<=NumMyShips, i+1){
   CommandToShip(i)!isSet := false;
   CommandToShip(i)!Fire!List := empty;
@@ -10456,17 +10476,34 @@ newtype tTurnDirection inherits tHeadingChange
      STRAIGHT;
 endnewtype;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),329(5,50))*/
-newtype tCollision
+newtype tCollisionType
    literals
      NO_COLLISION,
      LAND_COLLISION,
      ENEMY_SHIP_COLLISION,
      MY_SHIP_COLLISION;
 endnewtype;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),2591(40,50))*/
+newtype tCollisionData
+   struct
+       CollisionType tCollisionType;
+       CollisionPoint tCoordinates;
+       WallLayout tWallLayout;
+       Distance Integer;
+endnewtype;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),200(5,80))*/
 dcl
-   index Integer := 1,
-   CollisionType tCollision;
+   shipIndex Integer := 1,
+   CollisionData tCollisionData;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),2603(5,95))*/
+newtype tWallLayout
+literals
+    WALL_POINT,    
+    WALL_HORISONTAL,
+    WALL_VERTICAL,
+    WALL_INNER_CORNER,
+    WALL_OUTER_CORNER;
+endnewtype;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),1025(85,10))*/
 procedure EnemyFound2 referenced 
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),887(135,10))*/
@@ -10507,12 +10544,12 @@ procedure NewHeadingChange2 referenced
 движения в сторону цели */
 ;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),854(85,105))*/
-procedure isCollision2 referenced 
+procedure CheckCollision referenced 
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),851(135,105))*/
 /* Определение коллизии */
 ;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),848(85,120))*/
-procedure SolveCollision2 referenced 
+procedure ResolveCollision referenced 
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),845(135,120))*/
 /* Разрешение коллизии */
 ;
@@ -10524,624 +10561,330 @@ procedure NextShipState2 referenced
 на следующем такте симуляции */
 ;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),1274(85,150))*/
-procedure OutputOrder2 referenced 
+procedure OutputCommand referenced 
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),1277(135,150))*/
 /* Выдача команд кораблям */
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),1352(85,165))*/
-procedure FindHeadingTarget2 referenced 
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),1349(135,165))*/
-/* Определение очередного угла
-карты для движения туда
-кораблей при поиске
-противника  */
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),1346(85,185))*/
-procedure FindStartPoint2 referenced 
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),1343(135,185))*/
-/* Определение начальной точки
-двжения кораблей  для поиска 
-противника */
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),2000(85,200))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),2582(85,165))*/
+procedure FindHeadingTarget2 referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),2585(85,180))*/
+procedure GetTurnDirection referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),2000(85,195))*/
 procedure OnLand2 referenced 
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),2003(135,200))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),2003(135,195))*/
 /* Уход с мели */
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(1),2225(85,215))*/
-procedure SelectSpy referenced;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),137(75,30))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),137(80,5))*/
 start /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),209(75,50))*/
-decision /*#E*/ 
- 
-NumVisibleShips = 0
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),1145(65,57))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),1139(60,70))*/
+grst841:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2615(45,40))*/
 task {/*#E*/ 
  
-if (flagFight =false)
-flagFight := true;
+call DebugLogStringInt('Ship', shipIndex);
+call DebugLogStringInt('NumVisibleShips', NumVisibleShips);
+call DebugLogStringIntInt('Coordinates', ShipsCurrState(shipIndex)!Coordinates!x,
+ShipsCurrState(shipIndex)!Coordinates!y);
+call DebugLogStringIntInt('Deep/maxDeep:', (call getDeepXY(ShipsCurrState(shipIndex)!Coordinates!x,
+ShipsCurrState(shipIndex)!Coordinates!y)), d2i(ShipsCharacter(ShipsCurrState(shipIndex)!_
+TypeShip)!MaxDeep));
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),1490(65,85))*/
-join /*#E*/ 
-Step1;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2288(102,57))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2282(90,70))*/
-decision /*#E*/ 
-firstTact;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2294(125,80))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2285(110,90))*/
-call /*#E*/ 
-FindStartPoint2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2297(100,80))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2282(90,70))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2273(90,110))*/
-call /*#E*/ 
-SelectSpy;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2249(90,130))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2501(45,60))*/
 decision /*#E*/ 
  
-((ShipsCurrentState(spyIndex)!Coordinates!x <=
- HeadingTarget!x + 20) AND
-  (ShipsCurrentState(spyIndex)!Coordinates!x >=
- HeadingTarget!x - 20) AND 
-  (ShipsCurrentState(spyIndex)!Coordinates!y <=
- HeadingTarget!y + 20) AND 
-  (ShipsCurrentState(spyIndex)!Coordinates!y >=
- HeadingTarget!y  - 20)) 
+(call getDeepXY(ShipsCurrState(shipIndex)!Coordinates!x,
+ShipsCurrState(shipIndex)!Coordinates!y)) <
+d2i(ShipsCharacter(ShipsCurrState(shipIndex)!TypeShip)!MaxDeep)
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2258(72,137))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2240(55,145))*/
-call /*#E*/ 
-FindHeadingTarget2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2306(102,142))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2567(65,60))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2249(90,130))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2303(90,170))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2561(100,70))*/
 decision /*#E*/ 
- 
-((ShipsCurrentState(spyIndex)!Coordinates!x <=
- MyCenter!x + 10) AND
-  (ShipsCurrentState(spyIndex)!Coordinates!x >=
- MyCenter!x - 10) AND 
-  (ShipsCurrentState(spyIndex)!Coordinates!y <=
- MyCenter!y + 10) AND 
-  (ShipsCurrentState(spyIndex)!Coordinates!y >=
- MyCenter!y  - 10)) 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2330(67,177))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2324(55,185))*/
-task {/*#E*/ 
-spySearching:=true;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2327(102,182))*/
+NumVisibleShips=0;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2570(82,77))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2303(90,170))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),1595(95,215))*/
-join /*#E*/ 
-Step2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),209(75,50))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1484(75,25))*/
-connection /*#E*/ 
-Step1:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),2060(70,60))*/
-decision /*#E*/ 
- 
-(call getDeepXY(ShipsCurrState(index)!Coordinates!x,
-ShipsCurrState(index)!Coordinates!y)) <
-d2i(ShipsCharacter(ShipsCurrState(index)!_
-TypeShip)!MaxDeep)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),2081(62,72))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2495(65,85))*/
+call /*#E*/ 
+EnemyFound2(ShipsCurrState(shipIndex));
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2573(137,77))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),2072(55,80))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2558(115,85))*/
 call /*#E*/ 
- 
-OnLand2(
-ShipsCurrState(index),
-index)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),2069(92,72))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1439(85,80))*/
-call /*#E*/ 
- 
-EnemyFound2(
-ShipsCurrState(index),
-index)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),2060(70,60))*/
+EnemyNotFound2(ShipsCurrState(shipIndex));
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2561(100,70))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1433(70,100))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2492(100,115))*/
 task {/*#E*/ 
  
-CollisionType := 
-call isCollision2;
+CollisionData := call CheckCollision;
+if (CollisionData!CollisionType /= NO_COLLISION) {
+    call ResolveCollision;
+}
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1427(70,115))*/
-decision /*#E*/ 
- 
-CollisionType
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1457(52,122))*/
-(NO_COLLISION):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1421(55,130))*/
-call /*#E*/ 
-OutputOrder2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1460(87,122))*/
-else:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1418(85,130))*/
-call /*#E*/ 
- 
-SolveCollision2
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1427(70,115))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1412(70,145))*/
-task {/*#E*/ 
-index := 
-index + 1;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1409(70,160))*/
-decision /*#E*/ 
- 
-index <=
-NumMyShips
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),2087(62,160))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2516(45,60))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1610(82,170))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2498(25,85))*/
+call /*#E*/ 
+OnLand2(ShipsCurrState(shipIndex),
+shipIndex);
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2501(45,60))*/
+enddecision;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2480(45,135))*/
+task {/*#E*/ 
+call OutputCommand;
+shipIndex := shipIndex + 1;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2477(50,150))*/
+decision /*#E*/ 
+shipIndex <=
+NumMyShips;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2546(7,40))*/
+(true):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2552(62,162))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1607(75,175))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2471(55,170))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1409(70,160))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2477(50,150))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),2060(70,60))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(2),2615(45,40))*/
 join /*#E*/ 
-Step1;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(3),1484(75,25))*/
-endconnection Step1;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1742(75,30))*/
-connection /*#E*/ 
-Step2:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),2180(70,45))*/
-decision /*#E*/ 
- 
-firstTact
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),2198(90,52))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),2192(100,60))*/
-task {/*#E*/ 
-firstTact := false;
-MyCenter!x := ShipsCurrState(1)!Coordinates!x;
-MyCenter!y := ShipsCurrState(1)!Coordinates!y;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),2189(77,55))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),2180(70,45))*/
-enddecision;
-grst167:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),2012(70,95))*/
-decision /*#E*/ 
- 
-(call getDeepXY(ShipsCurrState(index)!Coordinates!x,
-ShipsCurrState(index)!Coordinates!y)) <
-d2i(ShipsCharacter(ShipsCurrState(index)!_
-TypeShip)!MaxDeep)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),2030(57,107))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),2024(55,115))*/
-call /*#E*/ 
- 
-OnLand2(
-ShipsCurrState(index),
-index)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),2051(92,107))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1739(85,115))*/
-call /*#E*/ 
- 
-EnemyNotFound2(
-ShipsCurrState(index),
-index)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),2012(70,95))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1733(70,135))*/
-task {/*#E*/ 
- 
-CollisionType := 
-call isCollision2;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1727(70,150))*/
-decision /*#E*/ 
- 
-CollisionType
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1763(52,157))*/
-(NO_COLLISION):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1721(55,165))*/
-call /*#E*/ 
-OutputOrder2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1766(87,157))*/
-else:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1718(85,165))*/
-call /*#E*/ 
- 
-SolveCollision2
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1727(70,150))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1712(70,180))*/
-task {/*#E*/ 
-index := 
-index + 1;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1709(70,195))*/
-decision /*#E*/ 
- 
-index <=
-NumMyShips
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),2054(62,195))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1787(82,205))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1703(75,210))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1709(70,195))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),2012(70,95))*/
-join /*#E*/ 
-grst167;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd(4),1742(75,30))*/
-endconnection Step2;
+grst841;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\StrategyStep.spd,4)*/
 endprocedure StrategyStep2;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd,4)*/
-procedure SolveCollision2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),116(100,15))*/
+procedure ResolveCollision;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),656(140,10))*/
+dcl
+ShipHeading tHeading,
+ChangeDirection tTurnDirection,
+ShipId tShipId;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),116(60,15))*/
 start /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),125(100,35))*/
-decision /*#E*/ 
- 
-CollisionType
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),140(60,35))*/
-(ENEMY_SHIP_COLLISION):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),137(85,50))*/
-decision /*#E*/ 
- 
-((ShipsCurrState(index)!Ammunition(   
-MISSILE) = 0) AND
-(ShipsCurrState(index)!Ammunition(
-TORPEDO) = 0) AND
-(ShipsCurrState(index)!Ammunition(
-SHELL) = 0) AND
-(ShipsCurrState(index)!Ammunition(
-REPAIR) = 0))
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),158(75,50))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),155(70,75))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),596(97,62))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),137(85,50))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),587(112,45))*/
-else:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),125(100,35))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),584(100,85))*/
-decision /*#E*/ 
- 
-((CommandToShip(index)!isSet = true)AND
-(CommandToShip(index)!OrderType = _ACCEL)AND
-(CommandToShip(index)!Accel > 0))
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),605(112,95))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),593(100,105))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),839(60,30))*/
+task {/*#E*/ 
+ShipHeading := ShipsCurrState(shipIndex)!Heading;
+ShipId := ShipsCurrState(shipIndex)!ShipId;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),641(60,50))*/
 task {/*#E*/ 
  
-CommandToShip(index)!isSet := false;
-CollisionType := call isCollision2;
+decision (CollisionData!WallLayout) {
+(WALL_VERTICAL) : {
+    decision (ShipHeading) {
+    (NORTH_EAST) : call SetShipTargetHeading(ShipId, NORTH_WEST);
+    (NORTH_WEST) : call SetShipTargetHeading(ShipId, NORTH_EAST);
+    (SOUTH_EAST) : call SetShipTargetHeading(ShipId, SOUTH_WEST);
+    (SOUTH_WEST) : call SetShipTargetHeading(ShipId, SOUTH_EAST);
+}
+}
+(WALL_HORISONTAL) : {
+    decision (ShipHeading) {
+    (NORTH_EAST) : call SetShipTargetHeading(ShipId, SOUTH_EAST);
+    (NORTH_WEST) : call SetShipTargetHeading(ShipId, SOUTH_WEST);
+    (SOUTH_EAST) : call SetShipTargetHeading(ShipId, NORTH_EAST);
+    (SOUTH_WEST) : call SetShipTargetHeading(ShipId, NORTH_WEST);
+}
+}
+(WALL_INNER_CORNER) : {
+    decision (ShipHeading) {
+    (NORTH_EAST) : call SetShipTargetHeading(ShipId, SOUTH_WEST);
+    (NORTH_WEST) : call SetShipTargetHeading(ShipId, SOUTH_EAST);
+    (SOUTH_EAST) : call SetShipTargetHeading(ShipId, NORTH_WEST);
+    (SOUTH_WEST) : call SetShipTargetHeading(ShipId, NORTH_EAST);
+}
+}
+(WALL_OUTER_CORNER) : {
+    decision (ShipHeading) {
+    (NORTH_EAST) : call SetShipTargetHeading(ShipId, SOUTH_WEST);
+    (NORTH_WEST) : call SetShipTargetHeading(ShipId, SOUTH_EAST);
+    (SOUTH_EAST) : call SetShipTargetHeading(ShipId, NORTH_WEST);
+    (SOUTH_WEST) : call SetShipTargetHeading(ShipId, NORTH_EAST);
+}
+}
+}
+ChangeDirection := STRAIGHT;
+if ((call GetShipTargetHeading(ShipId)) /= ShipsCurrState(shipIndex)!Heading) {
+    ChangeDirection := call GetTurnDirection(ShipsCurrState(shipIndex)!Heading, call GetShipTargetHeading(ShipId));
+    CommandToShip(shipIndex)!isSet := true;
+}
+if (ChangeDirection = RIGHT) CommandToShip(shipIndex)!OrderType := _RIGHT;
+if (ChangeDirection = LEFT) CommandToShip(shipIndex)!OrderType := _LEFT;
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),569(100,120))*/
-decision /*#E*/ 
- 
-CollisionType = NO_COLLISION
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),578(97,120))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),557(90,135))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),848(65,70))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),611(112,132))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),569(100,120))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),617(97,85))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),584(100,85))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(1),527(105,155))*/
-join /*#E*/ 
-Solv1;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),518(90,15))*/
-connection /*#E*/ 
-Solv1:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),488(85,30))*/
-task {/*#E*/ 
- 
-CommandTo_
-Ship(index)!OrderType := _RIGHT;
-CommandToShip(index)!isSet := true;
-CollisionType := call isCollision2;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),482(85,50))*/
-decision /*#E*/ 
- 
-CollisionType = NO_COLLISION
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),500(82,50))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),476(60,60))*/
-output /*#E*/ 
- 
-OrderTurnRequest(
-ShipsCurrState(index)!ShipId, 
-StrategyID, RIGHT)  
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),470(65,75))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),509(97,62))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),467(85,70))*/
-task {/*#E*/ 
- 
-CommandTo_
-Ship(index)!OrderType := _LEFT;
-CommandToShip(index)!isSet := true;
-CollisionType := call isCollision2;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),362(85,95))*/
-decision /*#E*/ 
- 
-CollisionType = NO_COLLISION
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),368(67,95))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),356(60,105))*/
-output /*#E*/ 
- 
-OrderTurnRequest(
-ShipsCurrState(index)!ShipId, 
-StrategyID, LEFT)  
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),350(65,120))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),377(97,107))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),347(85,120))*/
-task {/*#E*/ 
- 
-CommandTo_
-Ship(index)!OrderType := _ACCEL;
-CommandTo_
-Ship(index)!Accel := -1;
-CommandToShip(index)!isSet := true;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),341(85,140))*/
-output /*#E*/ 
- 
-OrderSpeedRequest(
-ShipsCurrState(index)!ShipId, 
-StrategyID,-1)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),335(90,155))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),362(85,95))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),482(85,50))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd(2),518(90,15))*/
-endconnection Solv1;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SolveCollision.spd,4)*/
-endprocedure SolveCollision2;
+endprocedure ResolveCollision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd,4)*/
-procedure isCollision2
+procedure CheckCollision
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd,1)*/
-; 
-returns  tCollision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),143(130,10))*/
+;
+returns Result tCollisionData;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),143(120,5))*/
 dcl
   MyShipNextState, OtherShipNextState tShipCurrentState,
   NextPoint tCoordinates, 
   NextHead tHeading,
-  IncX, IncY, i, Deep, maxDeep Integer, 
+  IncX, IncY, i, Deep, maxDeep, blockDist, maxCheckDist Integer, 
   flag  Real := 1,
+  tactCount Integer,
   MyShipType tNameShip;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),116(75,10))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2219(120,5))*/
+dcl
+CollisionLeft, CollisionRight, CollisionUp, CollisionDown Boolean;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),116(75,5))*/
 start /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),146(75,25))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),146(55,20))*/
 task {/*#E*/ 
- 
-MyShipNextState := 
-call NextShipState2(index);   
-NextHead := 
-MyShipNextState!Heading;
-MyShipType :=
-ShipsCurrState(index)!TypeShip;  
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1745(75,50))*/
+MyShipNextState := call NextShipState2(shipIndex);
+NextHead := MyShipNextState!Heading;
+MyShipType := ShipsCurrState(shipIndex)!TypeShip;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1745(75,40))*/
 decision /*#E*/ 
 NextHead;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1748(27,55))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1748(27,45))*/
 (NORTH):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1742(15,60))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1742(15,50))*/
 task {/*#E*/ 
 IncX:=0;
 IncY:=1;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1817(147,55))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1817(137,45))*/
 (NORTH_WEST):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1691(135,60))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1691(135,50))*/
 task {/*#E*/ 
- 
 IncX:=-1;
 IncY:=1;
-flag:=sqrt2;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1793(45,67))*/
+flag:=sqrt2;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1793(37,65))*/
 (EAST):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1703(30,75))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1703(30,70))*/
 task {/*#E*/ 
 IncX:=1;
 IncY:=0;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1805(142,75))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1805(122,65))*/
 (SOUTH_WEST):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1697(120,75))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1697(120,70))*/
 task {/*#E*/ 
- 
 IncX:=-1;
 IncY:=-1;
-flag:=sqrt2;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1811(60,82))*/
+flag:=sqrt2;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1811(52,85))*/
 (WEST):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1694(45,90))*/
 task {/*#E*/ 
 IncX:=-1;
 IncY:=0;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1787(130,90))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1787(107,85))*/
 (NORTH_EAST):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1706(105,90))*/
 task {/*#E*/ 
- 
 IncX:=1;
 IncY:=1;
-flag:=sqrt2;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1799(72,97))*/
+flag:=sqrt2;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1799(67,105))*/
 (SOUTH):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1700(60,105))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1700(60,110))*/
 task {/*#E*/ 
 IncX:=0;
 IncY:=-1;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2009(112,105))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2009(92,105))*/
 (SOUTH_EAST):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1688(90,105))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1688(90,110))*/
 task {/*#E*/ 
- 
 IncX:=1;
 IncY:=-1;
-flag:=sqrt2;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1745(75,50))*/
+flag:=sqrt2;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1745(75,40))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1739(75,125))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1739(75,135))*/
 task {/*#E*/ 
  
-NextPoint := ShipsCurrState(index)!Coordinates;
-i := 1;
+NextPoint := ShipsCurrState(shipIndex)!Coordinates;
+blockDist := 1;
 maxDeep := d2i(ShipsCharacter(MyShipType)!MaxDeep);
+tactCount := 3;
+maxCheckDist := fix(float(tactCount * ShipsCurrState(shipIndex)!Speed)/flag);
+if (maxCheckDist > 0 and maxCheckDist < 10) {
+maxCheckDist := 10;
+}
+
 };
-grst168:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2012(75,140))*/
+grst842:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2012(75,150))*/
 decision /*#E*/ 
- 
-/* Проверка посадки на мель на 2 такта вперед*/
- i<=fix(2*float(MyShipNextState!Speed)/flag)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2048(87,150))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2042(75,155))*/
-decision /*#E*/ 
- 
-(NextPoint!x + IncX < 0) OR 
-(NextPoint!y + IncY < 0) OR
-(NextPoint!x + IncX > MaxXCoordinate) OR 
-(NextPoint!y + IncY > MaxYCoordinate)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2054(70,155))*/
-(true):
-grst169:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1709(45,165))*/
-join /*#E*/ 
-P1;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2051(87,167))*/
+ blockDist<=maxCheckDist;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2297(70,147))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1733(75,175))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2291(15,160))*/
+task {/*#E*/ 
+Result!CollisionType := NO_COLLISION;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2288(30,175))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2048(87,162))*/
+(true):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2171(65,170))*/
+task {/*#E*/ 
+NextPoint!x := NextPoint!x + IncX;
+NextPoint!y := NextPoint!y + IncY;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2042(75,185))*/
+decision /*#E*/ 
+ 
+(NextPoint!x < 0) OR 
+(NextPoint!y < 0) OR
+(NextPoint!x > MaxXCoordinate) OR 
+(NextPoint!y > MaxYCoordinate)
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2129(57,192))*/
+(true):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2126(55,195))*/
+join /*#E*/ 
+CollisionMapBorder;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2165(90,195))*/
+(false):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1733(75,205))*/
 task {/*#E*/ 
  
-NextPoint!x := NextPoint!x + IncX;
-NextPoint!y := NextPoint!y + IncY;
 Deep := call getDeepXY(NextPoint!x,NextPoint!y);
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1727(75,190))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1727(75,220))*/
 decision /*#E*/ 
- 
-Deep < maxDeep
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1769(70,190))*/
+Deep < maxDeep;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2150(57,227))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1721(45,200))*/
-return /*#E*/ 
-LAND_COLLISION;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1772(87,200))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2147(55,230))*/
+join /*#E*/ 
+CollisionWall;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1772(87,230))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1718(75,210))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1718(75,235))*/
 task {/*#E*/ 
-i := i+1;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1727(75,190))*/
+blockDist := blockDist + 1;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1727(75,220))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2012(75,140))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2042(75,185))*/
+enddecision;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2012(75,150))*/
+enddecision;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2012(75,150))*/
 join /*#E*/ 
-grst168;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2042(75,155))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2030(70,140))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),1709(45,165))*/
-join /*#E*/ 
-grst169;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(1),2012(75,140))*/
-enddecision;
+grst842;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),509(75,5))*/
 connection /*#E*/ 
-P1:
+CollisionShips 
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),2066(95,35))*/
+/* Итерация по вражеским кораблям */
+:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1961(70,20))*/
 decision /*#E*/ 
- 
-NumVisibleShips = 0
-;
+NumVisibleShips = 0;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1967(82,30))*/
 (false):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),539(70,35))*/
 task {/*#E*/ 
 i := 1;};
-grst170:
+grst843:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),533(70,50))*/
 task {/*#E*/ 
  
@@ -11151,14 +10894,22 @@ EnemyShips(i)!TypeShip);
 };
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),530(70,65))*/
 decision /*#E*/ 
- 
-NextPoint = MyShipNextState!Coordinates
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),554(67,65))*/
+NextPoint = MyShipNextState!Coordinates;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),2093(107,72))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),524(30,75))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),2090(95,75))*/
+task {/*#E*/ 
+ 
+Result!CollisionPoint := NextPoint;
+Result!CollisionType := ENEMY_SHIP_COLLISION;
+Result!WallLayout := WALL_POINT;
+Result!Distance := blockDist;
+call DebugLogStringIntInt('Collision with enemy ship at', 
+Result!CollisionPoint!x, Result!CollisionPoint!y);
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),524(100,100))*/
 return /*#E*/ 
-ENEMY_SHIP_COLLISION;
+;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),557(82,77))*/
 (false):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),521(70,85))*/
@@ -11166,43 +10917,46 @@ task {/*#E*/
 i := i+1;};
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),518(70,100))*/
 decision /*#E*/ 
- 
- i <= NumVisibleShips
-;
+ i <= NumVisibleShips;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),563(65,100))*/
 (true):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),533(70,50))*/
 join /*#E*/ 
-grst170;
+grst843;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1958(82,110))*/
 (false):
-grst171:
+grst844:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1919(70,115))*/
 task {/*#E*/ 
 i := 1;};
-grst172:
+grst845:
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1916(70,130))*/
 decision /*#E*/ 
-index = i;
+shipIndex = i;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1925(82,140))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1913(70,145))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1913(55,145))*/
 task {/*#E*/ 
- 
-OtherShipNextState := 
-call NextShipState2(i);
-};
+OtherShipNextState := call NextShipState2(i);};
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1907(70,160))*/
 decision /*#E*/ 
- 
 OtherShipNextState!Coordinates = 
-MyShipNextState!Coordinates
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1940(65,160))*/
+MyShipNextState!Coordinates;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),2102(107,167))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1901(35,170))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),2099(95,175))*/
+task {/*#E*/ 
+ 
+Result!CollisionPoint := OtherShipNextState!Coordinates;
+Result!CollisionType := MY_SHIP_COLLISION;
+Result!WallLayout := WALL_POINT;
+Result!Distance := blockDist;
+call DebugLogStringIntInt('Collision with friend ship at', 
+Result!CollisionPoint!x, Result!CollisionPoint!y);
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1901(100,190))*/
 return /*#E*/ 
-MY_SHIP_COLLISION;
+;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1943(82,172))*/
 (false):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1907(70,160))*/
@@ -11214,23 +10968,24 @@ enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1898(70,185))*/
 task {/*#E*/ 
 i := i+1;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1895(70,200))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1895(70,215))*/
 decision /*#E*/ 
- 
- i <= NumMyShips
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1949(67,200))*/
+ i <= NumMyShips;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1949(20,130))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1955(82,210))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1955(92,220))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1889(75,215))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),2108(60,230))*/
+task {/*#E*/ 
+Result!CollisionType := NO_COLLISION;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1889(75,245))*/
 return /*#E*/ 
-NO_COLLISION;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1895(70,200))*/
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1895(70,215))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1916(70,130))*/
 join /*#E*/ 
-grst172;
+grst845;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),518(70,100))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),530(70,65))*/
@@ -11239,13 +10994,170 @@ enddecision;
 (true):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1919(70,115))*/
 join /*#E*/ 
-grst171;
+grst844;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),1961(70,20))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(2),509(75,5))*/
-endconnection P1;
+endconnection CollisionShips;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(3),2132(55,5))*/
+connection /*#E*/ 
+CollisionMapBorder:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(3),2135(35,25))*/
+task {/*#E*/ 
+Result!CollisionPoint := NextPoint;
+Result!CollisionType := LAND_COLLISION;
+Result!Distance := blockDist;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(3),2153(10,65))*/
+task {/*#E*/ 
+ 
+if ((NextPoint!x < 0 and NextPoint!y < 0) or (NextPoint!x > MaxXCoordinate and NextPoint!y < 0)
+or (NextPoint!x < 0 and NextPoint!y > MaxYCoordinate) or (NextPoint!x > MaxXCoordinate and NextPoint!y > MaxYCoordinate))
+{
+Result!WallLayout := WALL_INNER_CORNER;
+/*call DebugLogStringIntInt('Collision with map corner at', 
+Result!CollisionPoint!x, Result!CollisionPoint!y);*/
+}
+else if (NextPoint!x < 0 or NextPoint!x > MaxXCoordinate) {
+Result!WallLayout := WALL_VERTICAL;
+/*call DebugLogStringIntInt('Collision with vertical map border at', 
+Result!CollisionPoint!x, Result!CollisionPoint!y);*/
+}
+else if (NextPoint!y < 0 or NextPoint!y > MaxYCoordinate) {
+Result!WallLayout := WALL_HORISONTAL;
+/*call DebugLogStringIntInt('Collision with horisontal map border at', 
+Result!CollisionPoint!x, Result!CollisionPoint!y);*/
+}
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(3),2138(15,95))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(3),2132(55,5))*/
+endconnection CollisionMapBorder;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2189(50,5))*/
+connection /*#E*/ 
+CollisionWall:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2198(30,25))*/
+task {/*#E*/ 
+Result!CollisionPoint := NextPoint;
+Result!CollisionType := LAND_COLLISION;
+Result!Distance := blockDist;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2207(45,55))*/
+task {/*#E*/ 
+ 
+/* This works with out-of-map bounds too */
+CollisionLeft := (call getDeepXY(NextPoint!x-1,NextPoint!y)) < maxDeep;
+CollisionRight := (call getDeepXY(NextPoint!x+1,NextPoint!y)) < maxDeep;
+CollisionUp := (call getDeepXY(NextPoint!x,NextPoint!y+1)) < maxDeep;
+CollisionDown := (call getDeepXY(NextPoint!x,NextPoint!y-1)) < maxDeep;
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2237(45,75))*/
+decision /*#E*/ 
+CollisionLeft or CollisionRight
+or CollisionUp or CollisionDown;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2249(27,90))*/
+(false):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2246(20,95))*/
+task {/*#E*/ 
+Result!WallLayout := WALL_POINT;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2243(82,90))*/
+(true):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2222(70,95))*/
+task {/*#E*/ 
+ 
+if (NextHead = NORTH or NextHead = SOUTH) {
+    Result!WallLayout := WALL_HORISONTAL;
+} 
+else if (NextHead = EAST or NextHead = WEST) {
+    Result!WallLayout := WALL_VERTICAL;
+}
+else if (NextHead = NORTH_EAST) {
+    if (CollisionLeft and not CollisionDown) {
+        Result!WallLayout := WALL_HORISONTAL;
+    }
+    else if (not CollisionLeft and CollisionDown) {
+        Result!WallLayout := WALL_VERTICAL;
+    }
+    else if (CollisionLeft and CollisionDown) {
+        Result!WallLayout := WALL_INNER_CORNER;
+    }
+    else if (CollisionUp or CollisionRight)
+    {
+        Result!WallLayout := WALL_OUTER_CORNER;
+    }
+}
+else if (NextHead = NORTH_WEST) {
+    if (CollisionRight and not CollisionDown) {
+        Result!WallLayout := WALL_HORISONTAL;
+    }
+    else if (not CollisionRight and CollisionDown) {
+        Result!WallLayout := WALL_VERTICAL;
+    }
+    else if (CollisionRight and CollisionDown) {
+        Result!WallLayout := WALL_INNER_CORNER;
+    }
+    else if (CollisionUp or CollisionLeft)
+    {
+        Result!WallLayout := WALL_OUTER_CORNER;
+    }
+}
+else if (NextHead = SOUTH_EAST) {
+    if (CollisionLeft and not CollisionUp) {
+        Result!WallLayout := WALL_HORISONTAL;
+    }
+    else if (not CollisionLeft and CollisionUp) {
+        Result!WallLayout := WALL_VERTICAL;
+    }
+    else if (CollisionLeft and CollisionUp) {
+        Result!WallLayout := WALL_INNER_CORNER;
+    }
+    else if (CollisionDown or CollisionRight)
+    {
+        Result!WallLayout := WALL_OUTER_CORNER;
+    }
+}
+else if (NextHead = SOUTH_WEST) {
+    if (CollisionRight and not CollisionUp) {
+        Result!WallLayout := WALL_HORISONTAL;
+    }
+    else if (not CollisionRight and CollisionUp) {
+        Result!WallLayout := WALL_VERTICAL;
+    }
+    else if (CollisionRight and CollisionUp) {
+        Result!WallLayout := WALL_INNER_CORNER;
+    }
+    else if (CollisionDown or CollisionLeft)
+    {
+        Result!WallLayout := WALL_OUTER_CORNER;
+    }
+}
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2237(45,75))*/
+enddecision;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2270(5,145))*/
+task /*#E*/ 
+'' 
+/*
+decision (Result!WallLayout) {
+(WALL_HORISONTAL) : call DebugLogStringIntInt('Collision with horisontal wall at',
+Result!CollisionPoint!x, Result!CollisionPoint!y);
+(WALL_VERTICAL) : call DebugLogStringIntInt('Collision with vertical wall at',
+Result!CollisionPoint!x, Result!CollisionPoint!y);
+(WALL_INNER_CORNER) : call DebugLogStringIntInt('Collision with inner corner wall at',
+Result!CollisionPoint!x, Result!CollisionPoint!y);
+(WALL_OUTER_CORNER) : call DebugLogStringIntInt('Collision with outer corner wall at',
+Result!CollisionPoint!x, Result!CollisionPoint!y);
+(WALL_POINT) : call DebugLogStringIntInt('Collision with point wall at',
+Result!CollisionPoint!x, Result!CollisionPoint!y);
+}
+*/
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2192(10,190))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd(4),2189(50,5))*/
+endconnection CollisionWall;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\isCollision.spd,4)*/
-endprocedure isCollision2;
+endprocedure CheckCollision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NewHeading.spd,4)*/
 procedure NewHeadingChange2
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NewHeading.spd,1)*/
@@ -11271,34 +11183,22 @@ procedure CosBetweenVectors2 referenced
 /* Вычисление косинуса
 угла между 2 векторами */
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NewHeading.spd(2),116(25,35))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NewHeading.spd(2),116(10,85))*/
 start /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NewHeading.spd(2),131(25,55))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NewHeading.spd(2),131(10,105))*/
 task {/*#E*/ 
  
 CurrSpeed := OurShCurrState!Speed;
 if (CurrSpeed = 0) CurrSpeed :=  CurrSpeed+2;
-NextHding := call NextDirection2(
-OurShCurrState!Heading,RIGHT);
-RightPoint := call NextPosition2(
-OurShCurrState!Coordinates, NextHding, CurrSpeed, OurShCurrState!TypeShip);
- NextHding := call NextDirection2(OurShCurrState!Heading,LEFT);
-LeftPoint := call NextPosition2(
-OurShCurrState!Coordinates, NextHding, CurrSpeed, OurShCurrState!TypeShip);
-StraightPoint :=call NextPosition2
-(OurShCurrState!Coordinates, OurShCurrState!Heading, CurrSpeed, OurShCurrState!TypeShip);
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NewHeading.spd(2),146(25,100))*/
-task {/*#E*/ 
- 
+NextHding := call NextDirection2(OurShCurrState!Heading, RIGHT);
+RightPoint := call NextPosition2(OurShCurrState!Coordinates, NextHding, CurrSpeed, OurShCurrState!TypeShip);
+NextHding := call NextDirection2(OurShCurrState!Heading, LEFT);
+LeftPoint := call NextPosition2(OurShCurrState!Coordinates, NextHding, CurrSpeed, OurShCurrState!TypeShip);
+StraightPoint :=call NextPosition2(OurShCurrState!Coordinates, OurShCurrState!Heading, CurrSpeed, OurShCurrState!TypeShip);
 Cos(1) := call CosBetweenVectors2(OurShCurrState!Coordinates, RightPoint, TargetPoint);
 Cos(2) := call CosBetweenVectors2(OurShCurrState!Coordinates, LeftPoint, TargetPoint);
 Cos(3) := call CosBetweenVectors2(OurShCurrState!Coordinates, StraightPoint, TargetPoint);
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NewHeading.spd(2),164(25,115))*/
-task {/*#E*/ 
- 
 min := Cos(1);
 indx := 1;
 for( i :=2, i<=3, i+1){
@@ -11307,17 +11207,14 @@ for( i :=2, i<=3, i+1){
      indx := i;
   }
 } 
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NewHeading.spd(2),233(25,145))*/
-task {/*#E*/ 
- 
 if (indx = 1) ReturnDirect:=RIGHT;
 else {
 if (indx = 2) ReturnDirect:=LEFT;
  else ReturnDirect:=STRAIGHT;
 }
+
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NewHeading.spd(2),119(30,165))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NewHeading.spd(2),119(15,125))*/
 return /*#E*/ 
 ReturnDirect;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NewHeading.spd,4)*/
@@ -11469,7 +11366,7 @@ procedure NextPosition2
 dcl
   IncX, IncY, Deep, maxDeep Integer,
   flag Real := 1,
-  i Integer := 1,
+  i Integer,
   onLand Boolean;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),578(70,15))*/
 start /*#E*/ 
@@ -11483,63 +11380,8 @@ Direct;
 task {/*#E*/ 
 IncX:=0;
 IncY:=1;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),515(147,40))*/
-(NORTH_WEST):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),473(135,45))*/
-task {/*#E*/ 
- 
-IncX:=-1;
-IncY:=1;
-flag:=sqrt2;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),503(37,52))*/
-(EAST):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),485(25,60))*/
-task {/*#E*/ 
-IncX:=1;
-IncY:=0;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),509(137,60))*/
-(SOUTH_WEST):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),479(115,60))*/
-task {/*#E*/ 
- 
-IncX:=-1;
-IncY:=-1;
-flag:=sqrt2;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),512(52,67))*/
-(WEST):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),476(40,75))*/
-task {/*#E*/ 
-IncX:=-1;
-IncY:=0;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),500(122,75))*/
-(NORTH_EAST):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),488(100,75))*/
-task {/*#E*/ 
- 
-IncX:=1;
-IncY:=1;
-flag:=sqrt2;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),506(67,82))*/
-(SOUTH):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),482(55,90))*/
-task {/*#E*/ 
-IncX:=0;
-IncY:=-1;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),644(107,90))*/
-(SOUTH_EAST):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),470(85,90))*/
-task {/*#E*/ 
- 
-IncX:=1;
-IncY:=-1;
-flag:=sqrt2;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),494(70,35))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),467(70,110))*/
+grst846:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),467(70,135))*/
 task {/*#E*/ 
  
 onLand := false;
@@ -11548,15 +11390,15 @@ maxDeep := d2i(ShipsCharacter(NameShip)!MaxDeep);
 Deep := call getDeepXY(NextPos!x,NextPos!y);
 if (Deep < maxDeep) onLand := true;
 };
-grst173:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),626(70,135))*/
+grst847:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),626(70,160))*/
 decision /*#E*/ 
  
  i<=fix(float(Speed)/flag)
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),635(82,145))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),635(82,170))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),455(70,150))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),455(70,175))*/
 decision /*#E*/ 
  
 (NextPos!x + IncX < 0) OR 
@@ -11565,35 +11407,104 @@ decision /*#E*/
 (NextPos!y + IncY > MaxYCoordinate) OR
 ( (Deep < maxDeep) AND (onLand = false) )
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),692(65,150))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),692(65,175))*/
 (true):
-grst174:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),449(45,160))*/
+grst848:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),449(45,185))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),617(82,162))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),617(82,187))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),611(70,170))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),611(70,195))*/
 task {/*#E*/ 
  
 NextPos!x := NextPos!x + IncX;
 NextPos!y := NextPos!y + IncY;
 Deep := call getDeepXY(NextPos!x,NextPos!y);
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),446(70,185))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),446(70,210))*/
 task {/*#E*/ 
 i := i+1;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),626(70,135))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),626(70,160))*/
 join /*#E*/ 
-grst173;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),455(70,150))*/
+grst847;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),455(70,175))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),695(65,135))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),695(65,160))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),449(45,160))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),449(45,185))*/
 join /*#E*/ 
-grst174;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),626(70,135))*/
+grst848;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),626(70,160))*/
+enddecision;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),515(147,40))*/
+(NORTH_WEST):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),473(135,45))*/
+task {/*#E*/ 
+IncX:=-1;
+IncY:=1;};
+grst849:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),698(85,115))*/
+task {/*#E*/ 
+flag:=sqrt2;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),467(70,135))*/
+join /*#E*/ 
+grst846;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),503(37,52))*/
+(EAST):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),485(25,60))*/
+task {/*#E*/ 
+IncX:=1;
+IncY:=0;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),467(70,135))*/
+join /*#E*/ 
+grst846;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),509(137,60))*/
+(SOUTH_WEST):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),479(115,60))*/
+task {/*#E*/ 
+IncX:=-1;
+IncY:=-1;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),698(85,115))*/
+join /*#E*/ 
+grst849;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),512(52,67))*/
+(WEST):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),476(40,75))*/
+task {/*#E*/ 
+IncX:=-1;
+IncY:=0;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),467(70,135))*/
+join /*#E*/ 
+grst846;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),500(122,75))*/
+(NORTH_EAST):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),488(100,75))*/
+task {/*#E*/ 
+IncX:=1;
+IncY:=1;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),698(85,115))*/
+join /*#E*/ 
+grst849;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),506(67,82))*/
+(SOUTH):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),482(55,90))*/
+task {/*#E*/ 
+IncX:=0;
+IncY:=-1;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),467(70,135))*/
+join /*#E*/ 
+grst846;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),644(107,90))*/
+(SOUTH_EAST):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),470(85,90))*/
+task {/*#E*/ 
+IncX:=1;
+IncY:=-1;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),698(85,115))*/
+join /*#E*/ 
+grst849;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd(1),494(70,35))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextPosition.spd,4)*/
 endprocedure NextPosition2;
@@ -11601,7 +11512,7 @@ endprocedure NextPosition2;
 procedure NextShipState2
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd,1)*/
 ;fpar
-   in ShipIndex Integer;
+   in index Integer;
 returns ShipNextState tShipCurrentState;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),197(135,10))*/
 dcl
@@ -11610,68 +11521,64 @@ dcl
    OldCoords tCoordinates,
    TypeShp tNameShip,
    TempSpeed Integer;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),119(60,25))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),119(40,25))*/
 start /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),200(60,40))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),200(40,40))*/
 task {/*#E*/ 
  
-OldSpeed := ShipsCurrState(ShipIndex)!Speed;
-OldHeading := ShipsCurrState(ShipIndex)!Heading;
-OldCoords := ShipsCurrState(ShipIndex)!Coordinates;
-TypeShp := ShipsCurrState(ShipIndex)!TypeShip;
+OldSpeed := ShipsCurrState(index)!Speed;
+OldHeading := ShipsCurrState(index)!Heading;
+OldCoords := ShipsCurrState(index)!Coordinates;
+TypeShp := ShipsCurrState(index)!TypeShip;
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),155(60,60))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),155(40,60))*/
 decision /*#E*/ 
  
-CommandToShip(ShipIndex)!isSet
+CommandToShip(index)!isSet
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),161(72,72))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),161(52,72))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),149(60,80))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),149(40,80))*/
 decision /*#E*/ 
  
-CommandToShip(ShipIndex)!OrderType
+CommandToShip(index)!OrderType
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),167(85,90))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),167(65,90))*/
 (_ACCEL):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),143(75,95))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),143(55,95))*/
 task {/*#E*/ 
  
 TempSpeed := OldSpeed +
-fix(float(ShipsCharacter(TypeShp)!_
-MaxAcceleration)*Command_
-ToShip(ShipIndex)!Accel);
+fix(float(ShipsCharacter(TypeShp)!MaxAcceleration)*CommandToShip(index)!Accel);
 if (TempSpeed < 0)  ShipNextState!Speed := 0;
-if (TempSpeed > (ShipsCharacter(TypeShp)!MaxSpeed)) 
-ShipNextState!Speed := ShipsCharacter(TypeShp)!MaxSpeed;
+if (TempSpeed > (ShipsCharacter(TypeShp)!MaxSpeed)) {
+    ShipNextState!Speed := ShipsCharacter(TypeShp)!MaxSpeed;
+}
 ShipNextState!Heading := OldHeading;
-ShipNextState!Coordinates := call NextPosition2
-(OldCoords, OldHeading, ShipNextState!Speed, 
-ShipNextState!TypeShip);
+ShipNextState!Coordinates := call NextPosition2(OldCoords, OldHeading,
+                                                        ShipNextState!Speed, ShipNextState!TypeShip);
 };
-grst175:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),215(80,205))*/
+grst850:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),215(60,205))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),173(72,130))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),173(52,130))*/
 (_RIGHT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),137(60,135))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),137(40,135))*/
 task {/*#E*/ 
  
 ShipNextState!Speed := OldSpeed;
-ShipNextState!Heading := call NextDirection2(
-OldHeading, RIGHT);
-ShipNextState!Coordinates := call NextPosition2(
-OldCoords,ShipNextState!Heading, OldSpeed, 
+ShipNextState!Heading := call NextDirection2(OldHeading, RIGHT);
+ShipNextState!Coordinates := call NextPosition2(OldCoords, ShipNextState!Heading, OldSpeed, 
 ShipNextState!TypeShip);
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),215(80,205))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),215(60,205))*/
 join /*#E*/ 
-grst175;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),179(57,155))*/
+grst850;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),179(37,155))*/
 (_LEFT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),131(45,160))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),131(25,160))*/
 task {/*#E*/ 
  
 ShipNextState!Speed := OldSpeed;
@@ -11681,13 +11588,13 @@ ShipNextState!Coordinates := call NextPosition2(
 OldCoords,ShipNextState!Heading, OldSpeed, 
 ShipNextState!TypeShip);
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),215(80,205))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),215(60,205))*/
 join /*#E*/ 
-grst175;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),185(42,180))*/
+grst850;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),185(22,180))*/
 else:
-grst176:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),125(30,185))*/
+grst851:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),125(10,185))*/
 task {/*#E*/ 
  
 ShipNextState!Speed := OldSpeed;
@@ -11695,17 +11602,17 @@ ShipNextState!Heading := OldHeading;
 ShipNextState!Coordinates := call NextPosition2(
 OldCoords,OldHeading, OldSpeed, ShipNextState!TypeShip);
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),215(80,205))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),215(60,205))*/
 join /*#E*/ 
-grst175;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),149(60,80))*/
+grst850;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),149(40,80))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),191(55,60))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),191(35,60))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),125(30,185))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),125(10,185))*/
 join /*#E*/ 
-grst176;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),155(60,60))*/
+grst851;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd(1),155(40,60))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\NextShipState.spd,4)*/
 endprocedure NextShipState2;
@@ -11713,170 +11620,182 @@ endprocedure NextShipState2;
 procedure EnemyNotFound2
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd,1)*/
 ; fpar
-  in/out ShCurrSt tShipCurrentState,
-  in k Integer;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),902(125,5))*/
+  in/out ShCurrSt tShipCurrentState;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),902(5,25))*/
 dcl
    ChangeDirection tTurnDirection,
-   ShipName tNameShip,
-   NextHeading tTurnDirection;
+   ShipType tNameShip,
+   NextHeading tTurnDirection,
+   TargetHeading tHeading,
+   ShipId tShipId;
 
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),116(95,15))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1301(85,5))*/
+dcl PrevCoords tCoordinates;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1202(5,55))*/
+procedure ComputeTargetDir referenced;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),116(60,5))*/
 start /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),938(95,35))*/
-decision /*#E*/ 
-k=spyIndex;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),947(87,42))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),944(75,50))*/
-decision /*#E*/ 
-spySearching;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1019(62,57))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1010(25,65))*/
-task {/*#E*/ 
-ChangeDirection:=
-call NewHeadingChange2(ShCurrSt,HeadingTarget);
-ShipName:=ShCurrSt!TypeShip;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1022(55,85))*/
-decision /*#E*/ 
-ChangeDirection;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1031(27,92))*/
-(RIGHT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1028(5,100))*/
-task {/*#E*/ 
-CommandToShip(spyIndex)_
-!OrderType:=_RIGHT;
-CommandToShip(spyIndex)_
-!isSet:=true;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1055(25,120))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1037(102,92))*/
-(LEFT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1034(75,100))*/
-task {/*#E*/ 
-CommandToShip(spyIndex)_
-!OrderType:=_LEFT;
-CommandToShip(spyIndex)_
-!isSet:=true;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1049(95,120))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1040(67,95))*/
-else:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),950(55,145))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1010(60,25))*/
 task {/*#E*/ 
  
-if (ShipsCharacter(ShipName)!MaxSpeed = ShCurrSt!Speed)
+ChangeDirection := STRAIGHT;
+ShipType:=ShCurrSt!TypeShip;
+ShipId := ShCurrSt!ShipId;
+call DebugLogStringInt('ship id', ShipId);
+CommandToShip(shipIndex)!isSet := false;
+CommandToShip(shipIndex)!Accel := 0;
+
+/* Init free motion - rotate to appropriate angle */
+if (not (call GetShipReadyToFreeMotion(ShipId))) {
+    if (ShCurrSt!Speed > 0) {
+        CommandToShip(shipIndex)!isSet := true;
+        CommandToShip(shipIndex)!Accel := -1;
+    }
+    else {
+        call SetShipTargetHeading(ShipId, call ComputeTargetDir(ShCurrSt!Coordinates));
+        if ((call GetShipTargetHeading(ShipId)) = ShCurrSt!Heading) {
+            call SetShipReadyToFreeMotion(ShipId, true);
+            call SetShipPrevCoords(ShipId, ShCurrSt!Coordinates);
+        }
+    }
+}
+else if (ShCurrSt!Speed = 0) {
+    CommandToShip(shipIndex)!isSet := true;
+    CommandToShip(shipIndex)!Accel := 1;
+}
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1214(65,65))*/
+join /*#E*/ 
+CrossedCenter;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1220(65,80))*/
+connection /*#E*/ 
+CrossedCenter_End:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1271(60,95))*/
+task {/*#E*/ 
+ 
+if ((call GetShipTargetHeading(ShipId)) /= ShCurrSt!Heading) {
+    ChangeDirection := call GetTurnDirection(ShCurrSt!Heading, (call GetShipTargetHeading(ShipId)));
+    CommandToShip(shipIndex)!isSet := true;
+}
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1022(60,120))*/
+decision /*#E*/ 
+ChangeDirection;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1031(22,127))*/
+(RIGHT):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1028(5,140))*/
+task {/*#E*/ 
+CommandToShip(shipIndex)!OrderType := _RIGHT;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1037(122,127))*/
+(LEFT):
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1034(95,140))*/
+task {/*#E*/ 
+CommandToShip(shipIndex)!OrderType :=_LEFT;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1040(72,132))*/
+else:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),950(60,140))*/
+task {/*#E*/ 
+CommandToShip(shipIndex)!OrderType := _ACCEL;};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1022(60,120))*/
+enddecision;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1283(60,160))*/
+task {/*#E*/ 
+ 
+call SetShipPrevCoords(ShipId, ShCurrSt!Coordinates);
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),878(65,180))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1220(65,80))*/
+endconnection CrossedCenter_End;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1235(55,10))*/
+connection /*#E*/ 
+CrossedCenter:
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1244(50,25))*/
+task {/*#E*/ 
+ 
+PrevCoords := call GetShipPrevCoords(ShipId);
+if ((PrevCoords!x < MapCenterX and ShCurrSt!Coordinates!x >= MapCenterX)
+or (PrevCoords!x > MapCenterX and ShCurrSt!Coordinates!x <= MapCenterX)) {
+if (ShCurrSt!Heading = SOUTH_EAST) {
+    ChangeDirection := LEFT;
+    call SetShipTargetHeading(ShipId, NORTH_EAST);
+}
+else if (ShCurrSt!Heading = NORTH_WEST) {
+    ChangeDirection := LEFT;
+    call SetShipTargetHeading(ShipId, SOUTH_WEST);
+}
+else if (ShCurrSt!Heading = NORTH_EAST) {
+    ChangeDirection := RIGHT;
+    call SetShipTargetHeading(ShipId, SOUTH_EAST);
+}
+else if (ShCurrSt!Heading = SOUTH_WEST) {
+    ChangeDirection := RIGHT;
+    call SetShipTargetHeading(ShipId, NORTH_WEST);
+}
+}
+
+if ((PrevCoords!y < MapCenterY and ShCurrSt!Coordinates!y >= MapCenterY)
+or (PrevCoords!y > MapCenterY and ShCurrSt!Coordinates!y <= MapCenterY)) {
+if (ShCurrSt!Heading = SOUTH_EAST) {
+    ChangeDirection := RIGHT;
+    call SetShipTargetHeading(ShipId, SOUTH_WEST);
+}
+else if (ShCurrSt!Heading = NORTH_WEST) {
+    ChangeDirection := RIGHT;
+    call SetShipTargetHeading(ShipId, NORTH_EAST);
+}
+else if (ShCurrSt!Heading = NORTH_EAST) {
+    ChangeDirection := LEFT;
+    call SetShipTargetHeading(ShipId, NORTH_WEST);
+}
+else if (ShCurrSt!Heading = SOUTH_WEST) {
+    ChangeDirection := LEFT;
+    call SetShipTargetHeading(ShipId, SOUTH_EAST);
+}
+}
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1238(55,40))*/
+join /*#E*/ 
+CrossedCenter_End;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1235(55,10))*/
+endconnection CrossedCenter;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd,4)*/
+endprocedure EnemyNotFound2;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\ComputeTargetDir,4)*/
+procedure ComputeTargetDir
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\ComputeTargetDir,1)*/
+;fpar ShipCoords tCoordinates;
+returns TargetDir tHeading;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\ComputeTargetDir(1),116(60,5))*/
+start /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\ComputeTargetDir(1),119(60,20))*/
+task {/*#E*/ 
+ 
+if (ShipCoords!x < MapCenterX and ShipCoords!y < MapCenterY)
 {
-CommandToShip(spyIndex)!OrderType := _ACCEL;
-CommandToShip(spyIndex)!Accel := 0;
-CommandToShip(spyIndex)!isSet := true;
+TargetDir := NORTH_EAST;
+}
+else if (ShipCoords!x >= MapCenterX and ShipCoords!y < MapCenterY)
+{
+TargetDir := NORTH_WEST;
+}
+else if (ShipCoords!x < MapCenterX and ShipCoords!y >= MapCenterY)
+{
+TargetDir := SOUTH_EAST;
 }
 else
 {
-CommandToShip(spyIndex)!OrderType := _ACCEL;
-CommandToShip(spyIndex)!Accel := 1;
-CommandToShip(spyIndex)!isSet := true;
+TargetDir := SOUTH_WEST;
 }
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),878(60,170))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\ComputeTargetDir(1),125(65,40))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1022(55,85))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1160(132,57))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1157(120,65))*/
-task /*#E*/ 
- 
-NextHeading := call 
-NewHeadingChange2(ShCurrSt, MyCenter)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),1163(125,80))*/
-join /*#E*/ 
-F2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),944(75,50))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),989(177,42))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),986(170,50))*/
-join /*#E*/ 
-Dislocate;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(1),938(95,35))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1109(85,25))*/
-connection /*#E*/ 
-F2:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1106(80,45))*/
-decision /*#E*/ 
- 
-NextHeading
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1118(95,57))*/
-(LEFT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1100(80,65))*/
-task {/*#E*/ 
- 
-CommandToShip(k)!_
-OrderType := _LEFT;
-CommandToShip(k)!isSet := true;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1127(72,57))*/
-(RIGHT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1091(60,80))*/
-task {/*#E*/ 
- 
-CommandToShip(k)!_
-OrderType := _RIGHT;
-CommandToShip(k)!isSet := true;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1136(62,57))*/
-else:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1085(45,105))*/
-decision /*#E*/ 
- 
-ShCurrSt!Speed = 
-ShipsCharacter_
-(ShCurrSt!TypeShip)!_
-MaxSpeed 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1142(65,105))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1079(65,125))*/
-task {/*#E*/ 
- 
-CommandToShip(k)!_
-OrderType := _ACCEL;
-CommandToShip(k)!Accel := 1;
-CommandToShip(k)!isSet := true;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1151(47,117))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1085(45,105))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1073(50,140))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1106(80,45))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1094(85,95))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(2),1109(85,25))*/
-endconnection F2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(3),992(85,15))*/
-connection /*#E*/ 
-Dislocate:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(3),995(85,85))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd(3),992(85,15))*/
-endconnection Dislocate;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyNotFound.spd,4)*/
-endprocedure EnemyNotFound2;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\ComputeTargetDir,4)*/
+endprocedure ComputeTargetDir;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd,4)*/
 procedure EnemyFound2
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd,1)*/
@@ -11935,12 +11854,10 @@ start /*#E*/
 ;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),146(85,35))*/
 decision /*#E*/ 
- 
-ShCurrSt!TypeShip
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),725(62,42))*/
+ShCurrSt!TypeShip;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),725(47,42))*/
 (REPAIR_BOAT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),665(50,55))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),665(35,55))*/
 task {/*#E*/ 
  
 for (i:=1,i<=NumMyShips,i+1) {
@@ -11954,8 +11871,9 @@ for (i:=1,i<=NumMyShips,i+1) {
          break; 
      }
 }
+
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),626(50,100))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),626(35,100))*/
 decision /*#E*/ 
  
 (ShCurrSt!_
@@ -11964,33 +11882,29 @@ Ammunition
 (DestroyFlag = true) AND
 (NumMyShips > 1)
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),875(50,112))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),875(17,107))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),182(5,130))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),182(10,110))*/
 call /*#E*/ 
- 
-ActivateREPAIR2
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),653(10,145))*/
+ActivateREPAIR2;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),653(15,125))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),872(62,112))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),872(67,150))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),827(50,155))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),827(55,150))*/
 decision /*#E*/ 
- 
-NumMyShips = NumRepairShips
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),869(37,162))*/
+NumMyShips = NumRepairShips;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),869(47,157))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),692(45,170))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),692(40,170))*/
 task /*#E*/ 
  
 NextHeading := call
 NewHeadingChange2( 
 ShCurrSt,MyCenter)
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),866(77,162))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),866(82,157))*/
 (true):
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),851(70,170))*/
 task /*#E*/ 
@@ -11999,135 +11913,67 @@ NextHeading := call
 NewHeadingChange2(ShCurrSt,
 EnemyCenter)
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),827(50,155))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),827(55,150))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),845(65,190))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),845(60,190))*/
 join /*#E*/ 
 F2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),626(50,100))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),626(35,100))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),890(112,40))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),1154(137,42))*/
 else:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),887(115,45))*/
-decision /*#E*/ 
- 
-k=spyIndex
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),899(127,57))*/
-(false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),230(115,65))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),1133(110,50))*/
 task /*#E*/ 
- 
-CanShootWeaponry := 
-call CanShootEnemyCenter2
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),239(115,80))*/
+CanShootWeaponry := call CanShootEnemyCenter2;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),1127(135,70))*/
 decision /*#E*/ 
- 
-CanShootWeaponry!isWeaponry
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),251(112,90))*/
+CanShootWeaponry!isWeaponry;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),1160(117,77))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),248(100,95))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),1157(115,80))*/
 join /*#E*/ 
 F1;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),935(127,90))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),1145(147,82))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),929(120,95))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),1121(115,95))*/
 task /*#E*/ 
- 
-NextHeading := call
-NewHeadingChange2( 
-ShCurrSt,EnemyCenter)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),1037(125,110))*/
-join /*#E*/ 
-F3;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),239(115,80))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),914(102,60))*/
-(true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),911(85,125))*/
-task /*#E*/ 
- 
-NextHeading := call
-NewHeadingChange2( 
-ShCurrSt,MyCenter)
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),923(90,140))*/
+NextHeading := call NewHeadingChange2(ShCurrSt, EnemyCenter);
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),1115(140,110))*/
 join /*#E*/ 
 F2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),887(115,45))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),1127(135,70))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(2),146(85,35))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),992(75,25))*/
-connection /*#E*/ 
-F3:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),989(70,45))*/
-decision /*#E*/ 
- 
-NextHeading
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),1001(85,57))*/
-(LEFT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),983(70,65))*/
-task {/*#E*/ 
- 
-CommandToShip(k)!_
-OrderType := _LEFT;
-CommandToShip(k)!isSet := true;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),1010(62,57))*/
-(RIGHT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),974(50,80))*/
-task {/*#E*/ 
- 
-CommandToShip(k)!_
-OrderType := _RIGHT;
-CommandToShip(k)!isSet := true;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),1043(27,62))*/
-else:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),989(70,45))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),977(75,105))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),992(75,25))*/
-endconnection F3;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),815(85,5))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),815(85,5))*/
 connection /*#E*/ 
 F2:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),1046(70,25))*/
-task {/*#E*/ 
-spySearching := false;};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),773(80,45))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),773(80,45))*/
 decision /*#E*/ 
  
 NextHeading
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),779(95,57))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),779(95,57))*/
 (LEFT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),767(80,65))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),767(80,65))*/
 task {/*#E*/ 
  
 CommandToShip(k)!_
 OrderType := _LEFT;
 CommandToShip(k)!isSet := true;
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),788(72,57))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),788(72,57))*/
 (RIGHT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),758(60,80))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),758(60,80))*/
 task {/*#E*/ 
  
 CommandToShip(k)!_
 OrderType := _RIGHT;
 CommandToShip(k)!isSet := true;
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),797(62,57))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),797(62,57))*/
 else:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),752(45,105))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),752(45,105))*/
 decision /*#E*/ 
  
 ShCurrSt!Speed = 
@@ -12135,9 +11981,9 @@ ShipsCharacter_
 (ShCurrSt!TypeShip)!_
 MaxSpeed 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),803(65,105))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),803(65,105))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),746(65,125))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),746(65,125))*/
 task {/*#E*/ 
  
 CommandToShip(k)!_
@@ -12145,50 +11991,50 @@ OrderType := _ACCEL;
 CommandToShip(k)!Accel := 1;
 CommandToShip(k)!isSet := true;
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),812(47,117))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),812(47,117))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),752(45,105))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),752(45,105))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),740(50,140))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),740(50,140))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),773(80,45))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),773(80,45))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),761(85,95))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),761(85,95))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),815(85,5))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(3),815(85,5))*/
 endconnection F2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(5),284(70,5))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),284(70,5))*/
 connection /*#E*/ 
 F1:
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(5),389(65,20))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),389(65,20))*/
 decision /*#E*/ 
  
 ShCurrSt!Speed = 0
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(5),722(77,30))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),722(77,30))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(5),401(65,35))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),401(65,35))*/
 task {/*#E*/ 
  
 CommandToShip(k)!OrderType := _ACCEL;  
 CommandToShip(k)!Accel := -1;
 CommandToShip(k)!isSet := true;
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(5),416(70,50))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),416(70,50))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(5),575(57,25))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),575(57,25))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(5),521(15,65))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),521(15,65))*/
 task {/*#E*/ 
  
 BestWeaponry := CanShootWeaponry!TypeWeaponry;
-if (ShipsCharacter(ShCurrSt!TypeShip)!MaxLaunchUnit(BestWeaponry) < 
-    ShCurrSt!Ammunition(BestWeaponry))
-    MaxPointsToShoot :=  ShipsCharacter(ShCurrSt!TypeShip)!_
-                                            MaxLaunchUnit(BestWeaponry);
+if (ShipsCharacter(ShCurrSt!TypeShip)!MaxLaunchUnit(BestWeaponry) < ShCurrSt!Ammunition(BestWeaponry))
+{
+   MaxPointsToShoot :=  ShipsCharacter(ShCurrSt!TypeShip)!MaxLaunchUnit(BestWeaponry);
+}
 else 
     MaxPointsToShoot := ShCurrSt!Ammunition(BestWeaponry);
 for (i:=1, i<=NumVisibleShips, i+1) {
@@ -12215,12 +12061,12 @@ for (i:=1, i<=NumPointsToShoot, i+1) {
 }
 CommandToShip(k)!isSet := true;
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(5),281(20,85))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),281(20,85))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(5),389(65,20))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),389(65,20))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(5),284(70,5))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd(4),284(70,5))*/
 endconnection F1;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\EnemyFound.spd,4)*/
 endprocedure EnemyFound2;
@@ -12529,191 +12375,95 @@ return /*#E*/
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SortShootList.spd,4)*/
 endprocedure SortShootList2;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd,4)*/
-procedure OutputOrder2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),116(60,20))*/
+procedure OutputCommand;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),116(60,5))*/
 start /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),272(60,40))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),272(60,20))*/
 decision /*#E*/ 
  
-CommandToShip(index)!isSet
+CommandToShip(shipIndex)!isSet
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),356(57,40))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),356(57,20))*/
 (false):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),353(25,50))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),353(25,30))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),287(72,52))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),287(72,32))*/
 (true):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),263(60,65))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),263(60,40))*/
 decision /*#E*/ 
  
-CommandToShip(index)!OrderType
+CommandToShip(shipIndex)!OrderType
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),293(92,77))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),293(92,52))*/
 (_LEFT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),257(80,85))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),257(80,60))*/
 output /*#E*/ 
  
 OrderTurnRequest(
-ShipsCurrState(index)!ShipId, StrategyID, LEFT)
+ShipsCurrState(shipIndex)!ShipId, StrategyID, LEFT)
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),329(85,100))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),368(80,75))*/
+call /*#E*/ 
+DebugLogStringInt('Command: turn LEFT ship', shipIndex);
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),329(85,90))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),302(72,107))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),302(72,97))*/
 (_RIGHT):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),248(60,115))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),248(60,105))*/
 output /*#E*/ 
  
 OrderTurnRequest(
-ShipsCurrState(index)!ShipId, StrategyID, RIGHT)
+ShipsCurrState(shipIndex)!ShipId, StrategyID, RIGHT)
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),341(65,130))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),374(60,120))*/
+call /*#E*/ 
+DebugLogStringInt('Command: turn RIGHT ship', shipIndex);
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),341(65,135))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),311(52,137))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),311(47,47))*/
 (_ACCEL):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),239(40,145))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),239(40,150))*/
 output /*#E*/ 
  
-OrderSpeedRequest(ShipsCurrState(index)!ShipId, StrategyID,
-CommandToShip(index)!Accel)
+OrderSpeedRequest(ShipsCurrState(shipIndex)!ShipId, StrategyID,
+CommandToShip(shipIndex)!Accel)
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),332(45,160))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),386(40,165))*/
+task {/*#E*/ 
+ 
+if (CommandToShip(shipIndex)!Accel > 0) {
+call DebugLogStringInt('Command: +accelerate ship', shipIndex);
+} else {
+call DebugLogStringInt('Command: -accelerate ship', shipIndex);
+}
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),332(45,180))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),320(35,167))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),320(27,47))*/
 (_FIRE):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),230(20,175))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),230(20,200))*/
 output /*#E*/ 
  
-OrderFireRequest(ShipsCurrState(index)!ShipId, StrategyID,
-CommandToShip(index)!Fire!Weapon,CommandToShip(index)!Fire!List)
+OrderFireRequest(ShipsCurrState(shipIndex)!ShipId, StrategyID,
+CommandToShip(shipIndex)!Fire!Weapon,CommandToShip(shipIndex)!Fire!List)
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),338(25,190))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),362(20,215))*/
+call /*#E*/ 
+DebugLogStringInt('Command: FIRE ship', shipIndex);
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),338(25,230))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),263(60,65))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),263(60,40))*/
 enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),272(60,40))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd(1),272(60,20))*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OutputOrder.spd,4)*/
-endprocedure OutputOrder2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd,4)*/
-procedure FindStartPoint2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd,1)*/
- 
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),137(135,5))*/
-newtype Dist 
-   Array(Integer,Integer)
-endnewtype;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),143(135,20))*/
-dcl 
-   d Dist,
-   count, i, min Integer;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),128(30,25))*/
-start /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),125(30,40))*/
-task {/*#E*/ 
- 
-d(1) := call getDistance(MyCenter!x,MyCenter!y,FirstQuaterX, FirstQuaterY);
-d(2) := call getDistance(MyCenter!x,MyCenter!y,SecondQuaterX, SecondQuaterY);
-d(3) := call getDistance(MyCenter!x,MyCenter!y,ThirdQuaterX, ThirdQuaterY);
-d(4) := call getDistance(MyCenter!x,MyCenter!y,FourthQuaterX, FourthQuaterY);
-min := d(1); count:=1;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),353(30,60))*/
-task {/*#E*/ 
- 
-for (i:=2,i<=4,i+1){
- if (d(i)<=min) {
-   min := d(i);
-   count := i; } 
-}
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),308(30,80))*/
-decision /*#E*/ 
-count;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),332(72,85))*/
-(4):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),305(60,90))*/
-task {/*#E*/ 
- 
-HeadingTarget !x:= FourthQuaterX;
-HeadingTarget !y:= FourthQuaterY;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),329(57,90))*/
-(3):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),299(45,105))*/
-task {/*#E*/ 
- 
-HeadingTarget !x:= ThirdQuaterX;
-HeadingTarget !y:= ThirdQuaterY;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),326(42,90))*/
-(2):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),293(30,120))*/
-task {/*#E*/ 
- 
-HeadingTarget !x:= SecondQuaterX;
-HeadingTarget !y:= SecondQuaterY;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),323(27,90))*/
-(1):
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),287(15,135))*/
-task {/*#E*/ 
- 
-HeadingTarget !x:= FirstQuaterX;
-HeadingTarget !y:= FirstQuaterY;
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),308(30,80))*/
-enddecision;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd(1),245(35,150))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindStartPoint.spd,4)*/
-endprocedure FindStartPoint2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SearchHeadingTarget.spd,4)*/
-procedure FindHeadingTarget2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SearchHeadingTarget.spd(1),116(55,25))*/
-start /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SearchHeadingTarget.spd(1),137(55,50))*/
-task {/*#E*/ 
- 
-if ((HeadingTarget!x = FourthQuaterX) AND 
-    (HeadingTarget!y = FourthQuaterY)) {
-      HeadingTarget!x :=  FirstQuaterX;
-      HeadingTarget!y :=  FirstQuaterY;
-} 
-else {
-  if ((HeadingTarget!x = FirstQuaterX) AND 
-    (HeadingTarget!y = FirstQuaterY)) {
-      HeadingTarget!x :=  SecondQuaterX;
-      HeadingTarget!y :=  SecondQuaterY;
-  } 
-  else { 
-    if ((HeadingTarget!x = SecondQuaterX) AND 
-        (HeadingTarget!y = SecondQuaterY)) {
-         HeadingTarget!x :=  ThirdQuaterX;
-         HeadingTarget!y :=  ThirdQuaterY;
-    }  
-    else 
-     if ((HeadingTarget!x = ThirdQuaterX) AND 
-         (HeadingTarget!y = ThirdQuaterY)) {
-          HeadingTarget!x :=  FourthQuaterX;
-          HeadingTarget!y :=  FourthQuaterY;
-     }
-  }
-}
-};
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SearchHeadingTarget.spd(1),119(60,130))*/
-return /*#E*/ 
-;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SearchHeadingTarget.spd,4)*/
-endprocedure FindHeadingTarget2;
+endprocedure OutputCommand;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OnLand.spd,4)*/
 procedure OnLand2
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OnLand.spd,1)*/
@@ -12733,6 +12483,7 @@ start /*#E*/
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OnLand.spd(1),125(40,40))*/
 task {/*#E*/ 
  
+call DebugLogString('Ship stucked in wall');
 flagPath := false;
 for (i:=MyLandShip!Coordinates!x-1, i <=MyLandShip!Coordinates!x+1, i+1) {
   for (j:=MyLandShip!Coordinates!y-1, j <=MyLandShip!Coordinates!y+1, j+1) {
@@ -12747,6 +12498,7 @@ for (i:=MyLandShip!Coordinates!x-1, i <=MyLandShip!Coordinates!x+1, i+1) {
   }
   if (flagPath = true) break;
 }
+call DebugLogStringIntInt('Avoid Stuck: go to coordinates', i, j);
 };
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OnLand.spd(1),209(40,80))*/
 decision /*#E*/ 
@@ -12803,31 +12555,284 @@ return /*#E*/
 enddecision;
 /*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\OnLand.spd,4)*/
 endprocedure OnLand2;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SelectSpy.spd,4)*/
-procedure SelectSpy;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SelectSpy.spd(1),389(150,15))*/
-dcl
-  n Integer;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SelectSpy.spd(1),149(30,15))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindHeadingTarget2.spd,4)*/
+procedure FindHeadingTarget2;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindHeadingTarget2.spd(1),116(55,25))*/
 start /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SelectSpy.spd(1),392(30,35))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindHeadingTarget2.spd(1),137(55,50))*/
 task {/*#E*/ 
  
-spyIndex := 0;
-for (n:=1, n<=NumMyShips, n+1)
-{if (ShipsCurrentState(n)!TypeShip = CRUISER) {spyIndex := n;}}
-if (spyIndex = 0) {for (n:=1, n<=NumMyShips, n+1)
-{if (ShipsCurrentState(n)!TypeShip = DESTROYER) {spyIndex := n;}}}
-if (spyIndex = 0) {for (n:=1, n<=NumMyShips, n+1)
-{if (ShipsCurrentState(n)!TypeShip = BATTLESHIP) {spyIndex := n;}}}
-if (spyIndex = 0) {for (n:=1, n<=NumMyShips, n+1)
-{if (ShipsCurrentState(n)!TypeShip = MISSILE_CUTTER) {spyIndex := n;}}}
-if (spyIndex = 0) {for (n:=1, n<=NumMyShips, n+1)
-{if (ShipsCurrentState(n)!TypeShip = REPAIR_BOAT) {spyIndex := n;}}}
+HeadingTarget!x := ShipsCurrState(shipIndex)!Coordinates!x + 1;
+HeadingTarget!y := ShipsCurrState(shipIndex)!Coordinates!y + 1;
 };
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SelectSpy.spd(1),311(35,60))*/
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindHeadingTarget2.spd(1),119(60,85))*/
 return /*#E*/ 
 ;
-/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SelectSpy.spd,4)*/
-endprocedure SelectSpy;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\FindHeadingTarget2.spd,4)*/
+endprocedure FindHeadingTarget2;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetTurnDirection.spd,4)*/
+procedure GetTurnDirection
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetTurnDirection.spd,1)*/
+; fpar
+  CurrHeading tHeading,
+  TargetHeading tHeading;
+  returns DirChange tTurnDirection;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetTurnDirection.spd(1),134(150,5))*/
+dcl
+CurrHeadingInt Integer,
+TargetHeadingInt Integer;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetTurnDirection.spd(1),116(60,5))*/
+start /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetTurnDirection.spd(1),125(60,20))*/
+task {/*#E*/ 
+ 
+CurrHeadingInt := h2i(CurrHeading);
+TargetHeadingInt := h2i(TargetHeading);
+/* Convert to basis: CurrHeading = 0 */
+TargetHeadingInt := TargetHeadingInt - CurrHeadingInt;
+if (TargetHeadingInt < 0)
+{
+    TargetHeadingInt := TargetHeadingInt + 8;
+}
+if (TargetHeadingInt > 4)
+{
+    DirChange := LEFT;
+}
+else
+{
+    DirChange := RIGHT;
+}
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetTurnDirection.spd(1),119(65,80))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetTurnDirection.spd,4)*/
+endprocedure GetTurnDirection;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogStringInt.spd,4)*/
+procedure DebugLogStringInt
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogStringInt.spd,1)*/
+; fpar
+  str Charstring,
+  val Integer;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogStringInt.spd(1),119(65,10))*/
+start /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogStringInt.spd(1),134(65,35))*/
+output /*#E*/ 
+messageLog(call ConcatStringInt(str, val));
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogStringInt.spd(1),122(70,65))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogStringInt.spd,4)*/
+endprocedure DebugLogStringInt;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogString.spd,4)*/
+procedure DebugLogString
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogString.spd,1)*/
+; fpar
+  str Charstring;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogString.spd(1),122(55,15))*/
+start /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogString.spd(1),119(55,40))*/
+output /*#E*/ 
+messageLog(str);
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogString.spd(1),116(60,70))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogString.spd,4)*/
+endprocedure DebugLogString;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogStringIntInt.spd,4)*/
+procedure DebugLogStringIntInt
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogStringIntInt.spd,1)*/
+; fpar
+  str Charstring,
+  val1 Integer,
+  val2 Integer;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogStringIntInt.spd(1),122(55,25))*/
+start /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogStringIntInt.spd(1),119(55,50))*/
+output /*#E*/ 
+messageLog(call ConcatStringIntInt(str, val1, val2));
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogStringIntInt.spd(1),116(60,75))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\Debug\DebugLogStringIntInt.spd,4)*/
+endprocedure DebugLogStringIntInt;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\SetShipTargetHeading.spd,4)*/
+procedure SetShipTargetHeading
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\SetShipTargetHeading.spd,1)*/
+; fpar
+ShipId Integer,
+TargetHeading tHeading;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\SetShipTargetHeading.spd(1),125(40,15))*/
+start /*#E*/ 
+;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\SetShipTargetHeading.spd(1),122(40,30))*/
+task {/*#E*/ 
+ 
+for (dcl i Integer := 1, i <= MaxShipId, i+1)
+{
+    if (CustomShipState(i)!ShipId = ShipId)
+    {
+        CustomShipState(i)!TargetHeading := TargetHeading;
+        break;
+    }
+}
+};
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\SetShipTargetHeading.spd(1),116(45,45))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\SetShipTargetHeading.spd,4)*/
+endprocedure SetShipTargetHeading;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\GetShipTargetHeading,4)*/
+procedure GetShipTargetHeading
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\GetShipTargetHeading,1)*/
+; fpar
+ShipId Integer;
+returns TargetHeading tHeading;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\GetShipTargetHeading(1),125(40,15))*/
+start /*#E*/ 
+;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\GetShipTargetHeading(1),122(40,30))*/
+task {/*#E*/ 
+ 
+for (dcl i Integer := 1, i <= MaxShipId, i+1)
+{
+    if (CustomShipState(i)!ShipId = ShipId)
+    {
+        TargetHeading := CustomShipState(i)!TargetHeading;
+        break;
+    }
+}
+};
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\GetShipTargetHeading(1),116(45,45))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\GetShipTargetHeading,4)*/
+endprocedure GetShipTargetHeading;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SetShipReadyToFreeMotion.spd,4)*/
+procedure SetShipReadyToFreeMotion
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SetShipReadyToFreeMotion.spd,1)*/
+; fpar
+ShipId Integer,
+Ready Boolean;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SetShipReadyToFreeMotion.spd(1),116(55,10))*/
+start /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SetShipReadyToFreeMotion.spd(1),119(55,25))*/
+task {/*#E*/ 
+ 
+for (dcl i Integer := 1, i <= MaxShipId, i+1)
+{
+    if (CustomShipState(i)!ShipId = ShipId)
+    {
+        CustomShipState(i)!ReadyToFreeMotion := Ready;
+        break;
+    }
+}
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SetShipReadyToFreeMotion.spd(1),125(60,40))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\SetShipReadyToFreeMotion.spd,4)*/
+endprocedure SetShipReadyToFreeMotion;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetShipReadyToFreeMotion.spd,4)*/
+procedure GetShipReadyToFreeMotion
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetShipReadyToFreeMotion.spd,1)*/
+; fpar
+ShipId Integer;
+returns Ready Boolean;
+
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetShipReadyToFreeMotion.spd(1),125(55,20))*/
+start /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetShipReadyToFreeMotion.spd(1),122(55,35))*/
+task {/*#E*/ 
+ 
+for (dcl i Integer := 1, i <= MaxShipId, i+1)
+{
+    if (CustomShipState(i)!ShipId = ShipId)
+    {
+        Ready := CustomShipState(i)!ReadyToFreeMotion;
+        break;
+    }
+}
+};
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetShipReadyToFreeMotion.spd(1),116(60,50))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\Battleships\BattleShips\Strategy2\GetShipReadyToFreeMotion.spd,4)*/
+endprocedure GetShipReadyToFreeMotion;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\InitCustomShipState,4)*/
+procedure InitCustomShipState;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\InitCustomShipState(1),116(55,10))*/
+start /*#E*/ 
+;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\InitCustomShipState(1),119(55,25))*/
+task {/*#E*/ 
+ 
+for (dcl i Integer := 1, i <= length(ShipsCurrentState), i + 1)
+{
+    CustomShipState(i)!ShipId := ShipsCurrentState(i)!ShipId;
+}
+};
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\InitCustomShipState(1),122(60,40))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\InitCustomShipState,4)*/
+endprocedure InitCustomShipState;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\SetShipPrevCoords,4)*/
+procedure SetShipPrevCoords
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\SetShipPrevCoords,1)*/
+; fpar
+ShipId Integer,
+PrevCoords tCoordinates;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\SetShipPrevCoords(1),125(55,25))*/
+start /*#E*/ 
+;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\SetShipPrevCoords(1),122(55,40))*/
+task {/*#E*/ 
+ 
+for (dcl i Integer := 1, i <= MaxShipId, i+1)
+{
+    if (CustomShipState(i)!ShipId = ShipId)
+    {
+        CustomShipState(i)!PrevCoords := PrevCoords;
+        break;
+    }
+}
+};
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\SetShipPrevCoords(1),116(60,55))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\SetShipPrevCoords,4)*/
+endprocedure SetShipPrevCoords;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\GetShipPrevCoords.spd,4)*/
+procedure GetShipPrevCoords
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\GetShipPrevCoords.spd,1)*/
+; fpar
+ShipId Integer;
+returns PrevCoords tCoordinates;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\GetShipPrevCoords.spd(1),125(45,20))*/
+start /*#E*/ 
+;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\GetShipPrevCoords.spd(1),122(45,35))*/
+task {/*#E*/ 
+ 
+for (dcl i Integer := 1, i <= MaxShipId, i+1)
+{
+    if (CustomShipState(i)!ShipId = ShipId)
+    {
+        PrevCoords := CustomShipState(i)!PrevCoords;
+        break;
+    }
+}
+};
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\GetShipPrevCoords.spd(1),116(50,50))*/
+return /*#E*/ 
+;
+/*#SDTREF(SDL,C:\BattleShips\BattleShips\Strategy2\GetShipPrevCoords.spd,4)*/
+endprocedure GetShipPrevCoords;

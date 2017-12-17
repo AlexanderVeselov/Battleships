@@ -16,7 +16,7 @@ typedef struct tagMap
 } stMap;
 
 static stMap * Map;
-static const char * MapPath    = "c://battleships//Maps//map1.map";
+static const char * MapPath    = "c://battleships//Maps//map2.map";
 static int FleetCoords [MAX_FLEETS][2];
 static int MapReaded = 0;
 static int CoordsCalculated = 0;
@@ -85,6 +85,7 @@ int getDeepXY(int x, int y)
 
 int generatePoints(int Radius, int Deep, int NumOfStrat)
 {
+	/*
 	int i = 0;
 	int j = 0;
 	int k = 0;
@@ -97,6 +98,8 @@ int generatePoints(int Radius, int Deep, int NumOfStrat)
 	int Count = 0;
 	float XCoef;
 	float YCoef;
+	FILE* logfile;
+	char text[80];
 	
 	if (!MapReaded)
 		if (!readMap()) 
@@ -162,6 +165,19 @@ int generatePoints(int Radius, int Deep, int NumOfStrat)
 			}
 		}
 	}
+	sprintf(text, "%d %d, %d %d", FleetCoords[0][0], FleetCoords[0][1], FleetCoords[1][0], FleetCoords[1][1]);
+	logfile = fopen("log.txt", "w");
+	fwrite(text, sizeof(char), sizeof(text), logfile);
+	fclose(logfile);	
+	*/
+	
+	FleetCoords[0][0] = 180;
+	FleetCoords[0][1] = 10;
+	
+	FleetCoords[1][0] = 10;
+	FleetCoords[1][1] = 90;
+	CoordsCalculated = 1;
+	
 	return 1;
 }
 
@@ -191,4 +207,20 @@ void FreeAll()
 			free(Map->MapVal);
 		free(Map);
 	}
+}
+
+char logString[80];
+
+char* ConcatStringInt(const char* str, int val)
+{
+	memset(logString, 0, 80);
+	sprintf(logString, "%s %d", str, val);
+	return logString;
+}
+
+char* ConcatStringIntInt(const char* str, int val1, int val2)
+{
+	memset(logString, 0, 80);
+	sprintf(logString, "%s %d %d", str, val1, val2);
+	return logString;
 }

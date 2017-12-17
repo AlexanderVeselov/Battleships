@@ -399,7 +399,7 @@ typedef struct z_BasicTypes_0V_tWeaponryCharacter_s {
 /*****
 * NEWTYPE tEnemyShip  (TYPE section)
 * <<PACKAGE BasicTypes>>
-* #SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,165),1,9)
+* #SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,180),1,9)
 ******/
 extern tSDLStructInfo ySDL_z_BasicTypes_0Y_tEnemyShip;
 typedef struct z_BasicTypes_0Y_tEnemyShip_s {
@@ -877,8 +877,8 @@ extern z_BasicTypes_1F_tXCoordinate yTstI_z_BasicTypes_1F_tXCoordinate (
 #define yTstI_z_BasicTypes_1F_tXCoordinate(yExpr)  yExpr
 #endif
 #ifndef ANY_z_BasicTypes_1F_tXCoordinate
-#define ANY_z_BasicTypes_1F_tXCoordinate (z_BasicTypes_1F_tXCoordinate)(SDL_INTEGER_LIT(0) + \
-  GETINTRAND%(SDL_INTEGER_LIT(200)+1))
+#define ANY_z_BasicTypes_1F_tXCoordinate (z_BasicTypes_1F_tXCoordinate)(SDL_INTEGER_LIT(-1) + \
+  GETINTRAND%(SDL_INTEGER_LIT(201) - SDL_INTEGER_LIT(-1)+1))
 #endif
 
 /*****
@@ -911,8 +911,8 @@ extern z_BasicTypes_1G_tYCoordinate yTstI_z_BasicTypes_1G_tYCoordinate (
 #define yTstI_z_BasicTypes_1G_tYCoordinate(yExpr)  yExpr
 #endif
 #ifndef ANY_z_BasicTypes_1G_tYCoordinate
-#define ANY_z_BasicTypes_1G_tYCoordinate (z_BasicTypes_1G_tYCoordinate)(SDL_INTEGER_LIT(0) + \
-  GETINTRAND%(SDL_INTEGER_LIT(100)+1))
+#define ANY_z_BasicTypes_1G_tYCoordinate (z_BasicTypes_1G_tYCoordinate)(SDL_INTEGER_LIT(-1) + \
+  GETINTRAND%(SDL_INTEGER_LIT(101) - SDL_INTEGER_LIT(-1)+1))
 #endif
 
 /*****
@@ -1513,7 +1513,7 @@ extern XCONST struct xSortIdStruct ySrtR_z_BasicTypes_0X_tShipCurrentState;
 /*****
 * NEWTYPE tEnemyShip  (HEADING section)
 * <<PACKAGE BasicTypes>>
-* #SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,165),1,9)
+* #SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,180),1,9)
 ******/
 #ifndef XOPTSORT
 extern XCONST struct xSortIdStruct ySrtR_z_BasicTypes_0Y_tEnemyShip;

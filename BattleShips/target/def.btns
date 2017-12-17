@@ -1,0 +1,147 @@
+:Execute
+Symbol
+Step-Symbol
+Transition
+Next-Transition
+Go
+Go
+Until Timer
+Proceed-To-Timer
+Break
+
+:Send Signal
+Send To
+Output-To
+Send Via
+Output-Via
+Send None
+Output-None
+:Examine
+Process List
+List-Process -
+Variable
+Examine-Variable (
+Var In Scope
+Examine-Variable
+:Trace
+MSC
+Start-Interactive-MSC-Log 1
+SDL
+Set-GR-Trace 1
+TEXT
+Set-Trace 6
+Trace 1
+Set-Trace 1
+:MENU &General
+&Command
+?
+&Start SDL Env
+Start-SDL-Env
+&Version
+Show-Versions
+&News
+News
+:MENU &Execute
+&Go
+Go
+Over S&ymbol
+Next-Symbol
+&Into Stmt
+Step-Statement
+&Over Stmt
+Next-Statement
+&Finish
+Finish
+&Until Time
+Proceed-Until
+U&ntil Trace
+Next-Visible-Transition
+Un&til Timer
+Proceed-To-Timer
+Input &Script...
+execute-input-script
+&Command Script...
+execute-command-script
+Sto&p Sim
+Exit
+:MENU E&xamine
+&Ready Q
+List-Ready-Queue
+&Now
+Now
+&Process List
+List-Process -
+&Input Port
+List-Input-Port
+&Signal
+Examine-Signal-Instance
+&Timer List
+List-Timer
+&Variable
+Examine-Variable (
+&Call Stack
+Stack
+Set Sc&ope
+Set-Scope
+:MENU &Change
+&Ready Q
+Rearrange-Ready-Queue
+&State
+Nextstate
+&Create Process
+Create
+S&top Process
+Stop
+&Input Port
+Rearrange-Input-Port
+&Del Signal
+Remove-Signal-Instance
+Set Ti&mer
+Set-Timer
+R&eset Timer
+Reset-Timer
+&Variable
+Assign-Value
+:MENU &Show
+&Next Symbol
+Show-Next-Symbol
+&Prev Symbol
+Show-Previous-Symbol
+C &Line
+Show-C-Line-Number
+&Coverage
+Show-Coverage-Viewer
+:MENU &Trace
+&Text Level   : Set
+Set-Trace
+-                  : S&how
+List-Trace-Values
+&SDL Level   : Set
+Set-GR-Trace
+-                  : Sh&ow
+List-GR-Trace-Values
+&MSC Level  : Set
+Set-MSC-Trace
+-                  : Sho&w
+List-MSC-Trace-Values
+MS&C Trace : Start
+Start-Interactive-MSC-Log
+-                  : Start &Batch
+Start-Batch-MSC-Log
+-                  : Sto&p
+Stop-MSC-Log
+:MENU B&reakpoint
+&Transition
+Breakpoint-Transition
+&Output
+Breakpoint-Output
+&Variable
+Breakpoint-Variable
+&Symbol
+Breakpoint-At
+&Connect sdle
+Connect-To-Editor
+&Remove
+Remove-Breakpoint
+S&how
+List-Breakpoints
