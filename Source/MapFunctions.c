@@ -16,7 +16,7 @@ typedef struct tagMap
 } stMap;
 
 static stMap * Map;
-static const char * MapPath    = "c://battleships//Maps//map2.map";
+static const char * MapPath    = "c://battleships//Maps//empty.map";
 static int FleetCoords [MAX_FLEETS][2];
 static int MapReaded = 0;
 static int CoordsCalculated = 0;

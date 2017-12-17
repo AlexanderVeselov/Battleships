@@ -399,7 +399,7 @@ typedef struct z_BasicTypes_0V_tWeaponryCharacter_s {
 /*****
 * NEWTYPE tEnemyShip  (TYPE section)
 * <<PACKAGE BasicTypes>>
-* #SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,180),1,9)
+* #SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,170),1,9)
 ******/
 extern tSDLStructInfo ySDL_z_BasicTypes_0Y_tEnemyShip;
 typedef struct z_BasicTypes_0Y_tEnemyShip_s {
@@ -1513,7 +1513,7 @@ extern XCONST struct xSortIdStruct ySrtR_z_BasicTypes_0X_tShipCurrentState;
 /*****
 * NEWTYPE tEnemyShip  (HEADING section)
 * <<PACKAGE BasicTypes>>
-* #SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,180),1,9)
+* #SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,170),1,9)
 ******/
 #ifndef XOPTSORT
 extern XCONST struct xSortIdStruct ySrtR_z_BasicTypes_0Y_tEnemyShip;

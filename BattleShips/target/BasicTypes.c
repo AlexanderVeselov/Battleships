@@ -3410,7 +3410,7 @@ static XCONST struct xVarIdStruct yVarR_z_BasicTypes_0XS_Ammunition =
 /*****
 * NEWTYPE tEnemyShip  (BODY section)
 * <<PACKAGE BasicTypes>>
-* #SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,180),1,9)
+* #SDTREF(SDL,C:\Battleships\Packages\BasicTypes.sun(3),446(20,170),1,9)
 ******/
 
 /* *** tEnemyShip *** */
